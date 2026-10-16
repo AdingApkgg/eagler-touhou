@@ -12,6 +12,7 @@ const env={...process.env,EM_CONFIG:process.env.EM_CONFIG??resolve(sdk,'.emscrip
 const python=process.env.TH_PYTHON??'python';
 const run=(args)=>new Promise((done,reject)=>{const p=spawn(python,[emcc,...args],{cwd:root,env,windowsHide:true,stdio:['ignore','pipe','pipe']});let log='';p.stdout.on('data',x=>{log+=x;process.stdout.write(x);});p.stderr.on('data',x=>{log+=x;process.stderr.write(x);});p.on('error',reject);p.on('exit',code=>code?reject(Error('emcc failed '+code+'\n'+log)):done());});
 const thcrap=process.env.TH_ENABLE_THCRAP!=='0';
+const audioInclude=resolve(process.env.EAGLER_COMMON_ROOT??resolve(workspace,'third_party/eagler-common'),'include');
 // Phase A ships the ImGui/thprac infrastructure only. Phase D activates the
 // practice runtime/overlay call sites; without the flag every guarded call site
 // compiles out and the build is the vanilla baseline.
@@ -44,8 +45,10 @@ sources.push(...['imgui.cpp','imgui_draw.cpp','imgui_freetype.cpp','imgui_tables
 for(const source of ['cpp/game/PracticeConfig.cpp','cpp/game/PracticeRuntime.cpp','cpp/sdl/ThpracUi.cpp'])
  if(existsSync(resolve(root,source))&&!sources.includes(source))sources.push(source);
 const shared=resolve(workspace,'portable/sdl'),numeric=resolve(workspace,'portable/numeric'),input=resolve(workspace,'portable/input'),renderer=resolve(shared,'Renderer.cpp');
+common.push('-I'+audioInclude);
+const audioHeaders=[resolve(audioInclude,'eagler/audio/WebSfx.hpp')];
 function headers(dir){return readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?headers(resolve(dir,e.name)):/\.(h|hpp|inc)$/.test(e.name)?[resolve(dir,e.name)]:[]);}
-const hash=createHash('sha256');for(const path of [...headers(resolve(root,'cpp')),...(game==='th20'?headers(resolve(workspace,'source_reconstruction')):[]),...headers(shared),...headers(numeric),...headers(input)].sort())hash.update(path).update(readFileSync(path));
+const hash=createHash('sha256');for(const path of [...headers(resolve(root,'cpp')),...(game==='th20'?headers(resolve(workspace,'source_reconstruction')):[]),...headers(shared),...headers(numeric),...headers(input),...audioHeaders].sort())hash.update(path).update(readFileSync(path));
 // th20 game code genuinely throws (archive/verify paths, D3DX loader errors)
 // and uses dynamic_cast once, so the wasm build keeps exceptions and RTTI.
 const flags=[...common,game==='th20'?'-std=c++20':'-std=c++17',...(game==='th20'?['-fexceptions','-frtti','-include',resolve(root,'cpp/shim/msvc_compat.h'),'-I'+resolve(workspace,'include'),'-I'+resolve(root,'cpp'),'-msimd128','-msse','-msse2','-mavx']:['-fno-exceptions','-fno-rtti'])],prefix=JSON.stringify([flags,hash.digest('hex')]);
@@ -77,7 +80,7 @@ if(game==='th20'){const rsp=resolve(out,'link-objects.rsp');writeFileSync(rsp,li
 // working set; its memory ceiling is 2 GiB instead of the shared 1 GiB.
 await run([...flags,'--emit-symbol-map','--js-library',library,'-sDEFAULT_TO_CXX=1','--no-entry','-sMODULARIZE=1','-sEXPORT_ES6=1','-sENVIRONMENT=web,worker','-sALLOW_MEMORY_GROWTH=1','-sSTACK_SIZE=1048576','-sINITIAL_MEMORY=67108864',game==='th20'?'-sMAXIMUM_MEMORY=2147483648':'-sMAXIMUM_MEMORY=1073741824','-sFILESYSTEM=1','-lidbfs.js','-sEXPORTED_RUNTIME_METHODS=FS,IDBFS','-sINVOKE_RUN=0','-sEXIT_RUNTIME=0','-sMIN_WEBGL_VERSION=2','-sMAX_WEBGL_VERSION=2','-sGL_SUPPORT_AUTOMATIC_ENABLE_EXTENSIONS=0',...(process.env.TH_DEBUG_NAMES==='1'?['-g']:[]),...linkInputs,'-o',output]);
 const wasm=readFileSync(output.replace('.mjs','.wasm')),module=new WebAssembly.Module(wasm),sha=x=>createHash('sha256').update(x).digest('hex');
-const sourceFiles=[...sources.map(p=>resolve(root,p)),...headers(resolve(root,'cpp')),...(game==='th20'?headers(resolve(workspace,'source_reconstruction')):[]),...headers(shared),...headers(numeric),...headers(input),renderer,soft,resolve(workspace,'portable',game+'-services.json'),...(existsSync(resolve(root,'cpp/game/THPRAC-LICENSE.txt'))?[resolve(root,'cpp/game/THPRAC-LICENSE.txt')]:[]),fileURLToPath(import.meta.url)].sort();
+const sourceFiles=[...sources.map(p=>resolve(root,p)),...headers(resolve(root,'cpp')),...(game==='th20'?headers(resolve(workspace,'source_reconstruction')):[]),...headers(shared),...headers(numeric),...headers(input),...audioHeaders,renderer,soft,resolve(workspace,'portable',game+'-services.json'),...(existsSync(resolve(root,'cpp/game/THPRAC-LICENSE.txt'))?[resolve(root,'cpp/game/THPRAC-LICENSE.txt')]:[]),fileURLToPath(import.meta.url)].sort();
 const inventory=Object.fromEntries(sourceFiles.map(p=>[relative(workspace,p).replaceAll('\\','/'),sha(readFileSync(p))]));
 const sdkMetadata=resolve(sdk,'touhou-sdk.json');
 const toolchain=existsSync(sdkMetadata)?JSON.parse(readFileSync(sdkMetadata)):{emsdkRoot:relative(workspace,sdk).replaceAll('\\','/'),layout:'external'};

@@ -5,6 +5,7 @@
 #include "../platform_window/graphics_callbacks.hpp"
 #include "../startup_scene/startup.hpp"
 #include "sprite.hpp"
+#include "../../../th20_web/cpp/sdl/HitboxDisplay.hpp"
 #include "quad.hpp"
 extern "C" void sdl_startup_branding_draw(unsigned alpha);
 #endif
@@ -69,6 +70,10 @@ void draw_selected_animations(Controller& c,AnimationList* group) {
 }
 std::int32_t draw_animation_layer(Controller& c,std::int32_t layer) {
     std::lock_guard lock(runtime::shared_locks().slot(9));
-    for(bool secondary:{false,true})if(select_layer_animations(c.lists,layer,secondary)){configure_animation_layer(c,layer,0);draw_selected_animations(dispatch_environment::controller(),c.lists);}return 1;
+    for(bool secondary:{false,true})if(select_layer_animations(c.lists,layer,secondary)){configure_animation_layer(c,layer,0);draw_selected_animations(dispatch_environment::controller(),c.lists);}
+#ifdef TH_SDL3
+    web::draw_hitbox_layer(c,layer);
+#endif
+    return 1;
 }
 }

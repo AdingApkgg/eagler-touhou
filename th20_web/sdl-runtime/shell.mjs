@@ -70,7 +70,7 @@ async function installRuntimePack(pack){
   Module.FS.writeFile(file.path,file.bytes,{canOwn:true});runtimePackFiles.push(file.path);
  }
 }
-function applyOptions(){applyTouchOptions(core,options);}
+function applyOptions(){applyTouchOptions(core,options);core.sdl_always_hitbox(+(options.alwaysHitbox===true));}
 function status(){return Array.from(new Int32Array(core.memory.buffer,core.sdl_game_status(),10));}
 function save(){if(app)core.application_save(app);return sync(false);}
 async function resumeForegroundAudio(forcePause=false){

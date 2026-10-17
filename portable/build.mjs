@@ -8,7 +8,7 @@ const workspace=resolve(fileURLToPath(new URL('../',import.meta.url))),game=proc
 const sdk=process.env.EMSDK??(existsSync(resolve(workspace,'tools/emsdk'))?resolve(workspace,'tools/emsdk'):resolve(workspace,'../toolchains/emsdk'));
 const emcc=[resolve(sdk,'install/emscripten/emcc.py'),resolve(sdk,'upstream/emscripten/emcc.py')].find(existsSync);
 if(!emcc)throw Error('Install the pinned Emscripten SDK first (tools/download-emscripten.py).');
-const env={...process.env,EM_CONFIG:process.env.EM_CONFIG??resolve(sdk,'.emscripten'),EMSDK:sdk,EMCC_CORES:'4'};
+const env={...process.env,EM_CONFIG:process.env.EM_CONFIG??resolve(sdk,'.emscripten'),EMSDK:sdk,EMCC_CORES:process.env.EMCC_CORES??'4'};
 const python=process.env.TH_PYTHON??'python';
 const run=(args)=>new Promise((done,reject)=>{const p=spawn(python,[emcc,...args],{cwd:root,env,windowsHide:true,stdio:['ignore','pipe','pipe']});let log='';p.stdout.on('data',x=>{log+=x;process.stdout.write(x);});p.stderr.on('data',x=>{log+=x;process.stderr.write(x);});p.on('error',reject);p.on('exit',code=>code?reject(Error('emcc failed '+code+'\n'+log)):done());});
 const thcrap=process.env.TH_ENABLE_THCRAP!=='0';
@@ -65,7 +65,8 @@ const outputs=new Array(sources.length);let next=0,done=0;
 // hide the remaining error surface, so th20 workers keep going and failures are
 // reported (and thrown) after the sweep. th08/th10 keep fail-fast semantics.
 const failures=[];
-await Promise.all(Array.from({length:4},async()=>{while(next<sources.length){const i=next++;try{outputs[i]=await compile(resolve(root,sources[i]),sources[i].replaceAll(/[\\/:.]/g,'_'));}catch(e){if(game!=='th20')throw e;failures.push(sources[i]);console.error('FAILED '+sources[i]);}if(++done%40===0)console.log(done+'/'+sources.length+' translation units');}}));
+const buildJobs=Math.max(1,Math.min(16,Number.parseInt(process.env.TH_BUILD_JOBS||'4',10)||4));
+await Promise.all(Array.from({length:buildJobs},async()=>{while(next<sources.length){const i=next++;try{outputs[i]=await compile(resolve(root,sources[i]),sources[i].replaceAll(/[\\/:.]/g,'_'));}catch(e){if(game!=='th20')throw e;failures.push(sources[i]);console.error('FAILED '+sources[i]);}if(++done%40===0)console.log(done+'/'+sources.length+' translation units');}}));
 if(failures.length){console.error(failures.length+'/'+sources.length+' translation units failed:');for(const f of failures)console.error('  '+f);throw Error(failures.length+' translation units failed to compile');}
 const output=resolve(out,game+'-sdl.mjs');
 const hostImports=[];

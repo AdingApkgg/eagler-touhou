@@ -8,7 +8,7 @@ const workspace=resolve(fileURLToPath(new URL('../',import.meta.url))),game=proc
 const sdk=process.env.EMSDK??(existsSync(resolve(workspace,'tools/emsdk'))?resolve(workspace,'tools/emsdk'):resolve(workspace,'../toolchains/emsdk'));
 const emcc=[resolve(sdk,'install/emscripten/emcc.py'),resolve(sdk,'upstream/emscripten/emcc.py')].find(existsSync);
 if(!emcc)throw Error('Install the pinned Emscripten SDK first (tools/download-emscripten.py).');
-const env={...process.env,EM_CONFIG:process.env.EM_CONFIG??resolve(sdk,'.emscripten'),EMSDK:sdk,EMCC_CORES:'4'};
+const env={...process.env,EM_CONFIG:process.env.EM_CONFIG??resolve(sdk,'.emscripten'),EMSDK:sdk,EMCC_CORES:process.env.EMCC_CORES??'4'};
 const python=process.env.TH_PYTHON??'python';
 const run=(args)=>new Promise((done,reject)=>{const p=spawn(python,[emcc,...args],{cwd:root,env,windowsHide:true,stdio:['ignore','pipe','pipe']});let log='';p.stdout.on('data',x=>{log+=x;process.stdout.write(x);});p.stderr.on('data',x=>{log+=x;process.stderr.write(x);});p.on('error',reject);p.on('exit',code=>code?reject(Error('emcc failed '+code+'\n'+log)):done());});
 const thcrap=process.env.TH_ENABLE_THCRAP!=='0';
@@ -17,6 +17,7 @@ const audioInclude=resolve(process.env.EAGLER_COMMON_ROOT??resolve(workspace,'th
 // practice runtime/overlay call sites; without the flag every guarded call site
 // compiles out and the build is the vanilla baseline.
 const thprac=process.env.TH_ENABLE_THPRAC==='1'||process.argv.includes('--thprac');
+const replayClockExperiments=game==='th20'&&process.env.TH20_REPLAY_CLOCK_EXPERIMENTS==='1';
 const imgui=resolve(root,'cpp/third_party/imgui');
 const common=['-O2','-g0','-fno-strict-aliasing','-ffp-contract=off','-DTH_SDL3=1','-DTH_NATIVE_PLATFORM=1','-DIMGUI_DISABLE_WIN32_FUNCTIONS','--use-port=sdl3','--use-port=sdl3_ttf','-I'+resolve(workspace,'portable/sdl'),'-I'+imgui,...(game==='th20'?['-I'+resolve(root,'cpp/shim'),'-I'+resolve(workspace,'source_reconstruction')]:[]),...(thcrap?['-DTH_ENABLE_THCRAP=1']:[]),...(thprac?['-DTH_ENABLE_THPRAC=1']:[])];
 if(presentationLab)common.push('-DTH_PRESENTATION_AUDIT=1');
@@ -53,8 +54,8 @@ const hash=createHash('sha256');for(const path of [...headers(resolve(root,'cpp'
 // and uses dynamic_cast once, so the wasm build keeps exceptions and RTTI.
 const flags=[...common,game==='th20'?'-std=c++20':'-std=c++17',...(game==='th20'?['-fexceptions','-frtti','-include',resolve(root,'cpp/shim/msvc_compat.h'),'-I'+resolve(workspace,'include'),'-I'+resolve(root,'cpp'),'-msimd128','-msse','-msse2','-mavx']:['-fno-exceptions','-fno-rtti'])],prefix=JSON.stringify([flags,hash.digest('hex')]);
 const objects=resolve(out,'objects');mkdirSync(objects,{recursive:true});
-async function compile(source,name,c=false){const object=resolve(objects,name+'.o'),key=createHash('sha256').update(prefix).update(readFileSync(source)).digest('hex');if(existsSync(object)&&existsSync(object+'.key')&&readFileSync(object+'.key','utf8')===key)return object;
- await run([...(c?[...common,'-std=c11','-DSOFTFLOAT_FAST_INT64','-DINLINE_LEVEL=5']:flags),'-c',source,'-o',object]);writeFileSync(object+'.key',key);return object;
+async function compile(source,name,c=false){const experiment=replayClockExperiments&&source.endsWith('ReplayVerifier.cpp')?['-DTH20_REPLAY_CLOCK_EXPERIMENTS=1']:[];const object=resolve(objects,name+'.o'),key=createHash('sha256').update(prefix).update(experiment.join()).update(readFileSync(source)).digest('hex');if(existsSync(object)&&existsSync(object+'.key')&&readFileSync(object+'.key','utf8')===key)return object;
+ await run([...(c?[...common,'-std=c11','-DSOFTFLOAT_FAST_INT64','-DINLINE_LEVEL=5']:flags),...experiment,'-c',source,'-o',object]);writeFileSync(object+'.key',key);return object;
 }
 console.log('Build '+game+' C++ / SDL3 / Emscripten');
 // Populate SDL's port cache once before parallel translation units use it.
@@ -65,7 +66,8 @@ const outputs=new Array(sources.length);let next=0,done=0;
 // hide the remaining error surface, so th20 workers keep going and failures are
 // reported (and thrown) after the sweep. th08/th10 keep fail-fast semantics.
 const failures=[];
-await Promise.all(Array.from({length:4},async()=>{while(next<sources.length){const i=next++;try{outputs[i]=await compile(resolve(root,sources[i]),sources[i].replaceAll(/[\\/:.]/g,'_'));}catch(e){if(game!=='th20')throw e;failures.push(sources[i]);console.error('FAILED '+sources[i]);}if(++done%40===0)console.log(done+'/'+sources.length+' translation units');}}));
+const buildJobs=Math.max(1,Math.min(16,Number.parseInt(process.env.TH_BUILD_JOBS||'4',10)||4));
+await Promise.all(Array.from({length:buildJobs},async()=>{while(next<sources.length){const i=next++;try{outputs[i]=await compile(resolve(root,sources[i]),sources[i].replaceAll(/[\\/:.]/g,'_'));}catch(e){if(game!=='th20')throw e;failures.push(sources[i]);console.error('FAILED '+sources[i]);}if(++done%40===0)console.log(done+'/'+sources.length+' translation units');}}));
 if(failures.length){console.error(failures.length+'/'+sources.length+' translation units failed:');for(const f of failures)console.error('  '+f);throw Error(failures.length+' translation units failed to compile');}
 const output=resolve(out,game+'-sdl.mjs');
 const hostImports=[];
@@ -84,5 +86,5 @@ const sourceFiles=[...sources.map(p=>resolve(root,p)),...headers(resolve(root,'c
 const inventory=Object.fromEntries(sourceFiles.map(p=>[relative(workspace,p).replaceAll('\\','/'),sha(readFileSync(p))]));
 const sdkMetadata=resolve(sdk,'touhou-sdk.json');
 const toolchain=existsSync(sdkMetadata)?JSON.parse(readFileSync(sdkMetadata)):{emsdkRoot:relative(workspace,sdk).replaceAll('\\','/'),layout:'external'};
-const report={builtAt,game,kind:'cpp-sdl3',profile,diagnostic:presentationLab,version:game==='th10'?'3.5.1-sdl3':game==='th08'?'3.4.0-sdl3':'1.0.0-sdl3',features:{thprac,languages:thcrap,focusHitbox:false},...{architecture:{loop:'cpp-original-cadence-skip-expired-single-tick',audio:'miniaudio-sdl3',renderer:'cpp-gles-semantic-batched',graphicsInterface:'semantic-state-texture-matrix',vertexUpload:'web-bufferData-direct-game-batches-cached-vao',files:'sdl-io-idbfs',fonts:'sdl3-ttf',input:'cpp-sdl',launcher:'eagler-touhou/1'}},sdlVersion:'3.4.2',sources,sourceFiles:inventory,sharedSources:['Renderer.cpp','Renderer.hpp','Shaders.hpp','GraphicsState.hpp','AssetPixelFormat.hpp','RenderCommands.hpp','LegacyGraphics.hpp','ExactFloat.hpp','MotionTrack.hpp'],bytes:wasm.length,sha256:sha(wasm),loaderSha256:sha(readFileSync(output)),imports:WebAssembly.Module.imports(module),exports:WebAssembly.Module.exports(module),toolchain};
+const report={builtAt,game,kind:'cpp-sdl3',profile,diagnostic:presentationLab||replayClockExperiments,replayClockExperiments,version:game==='th10'?'3.5.1-sdl3':game==='th08'?'3.4.0-sdl3':'1.0.0-sdl3',features:{thprac,languages:thcrap,focusHitbox:false},...{architecture:{loop:'cpp-original-cadence-skip-expired-single-tick',audio:'miniaudio-sdl3',renderer:'cpp-gles-semantic-batched',graphicsInterface:'semantic-state-texture-matrix',vertexUpload:'web-bufferData-direct-game-batches-cached-vao',files:'sdl-io-idbfs',fonts:'sdl3-ttf',input:'cpp-sdl',launcher:'eagler-touhou/1'}},sdlVersion:'3.4.2',sources,sourceFiles:inventory,sharedSources:['Renderer.cpp','Renderer.hpp','Shaders.hpp','GraphicsState.hpp','AssetPixelFormat.hpp','RenderCommands.hpp','LegacyGraphics.hpp','ExactFloat.hpp','MotionTrack.hpp'],bytes:wasm.length,sha256:sha(wasm),loaderSha256:sha(readFileSync(output)),imports:WebAssembly.Module.imports(module),exports:WebAssembly.Module.exports(module),toolchain};
 writeFileSync(resolve(out,'build.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({game,bytes:wasm.length,sha256:report.sha256,output},null,2));

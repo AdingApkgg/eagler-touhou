@@ -3,6 +3,7 @@
 import {createBrowserKeyboard} from './directory-keyboard.mjs';
 import {installStartupBranding} from './startup-branding.mjs';
 import createModule from './th20-sdl.mjs';
+import {runtimeKeyboardCode} from './directory-keyboard.mjs';
 import {bindOutsideTouches} from './eagler-host.mjs';
 import {normalizeOptions,applyTouchOptions,touchControls,suspendRuntimeAudio,resumeRuntimeAudio,directTouch,ensureSharedFontAlias,installResources as installHostResources,observeMusicWrites,mountManagedData,isSupersededRuntimeError} from './eagler-host.mjs';
 const protocol='eagler-touhou/1',game='th20',query=new URLSearchParams(location.search),canvas=document.querySelector('canvas');
@@ -10,7 +11,7 @@ const epoch=Number(query.get('runtimeEpoch'));
 const validEpoch=Number.isSafeInteger(epoch)&&epoch>0;
 const emit=(event,fields={})=>parent.postMessage({protocol,game,epoch,event,...fields},location.origin);
 let Module,core,app=0,launched=false,first=false,closing=false,language=query.get('language')==='lang_zh-hans'?'chs':'jp',options={},music=true;
-const keyboard=createBrowserKeyboard({
+const keyboard=createBrowserKeyboard({hostContext:{protocol,game,epoch,origin:location.origin,ready:()=>launched&&!document.hidden&&!options.netplaySpectator&&!closing,reset:clearKeyboard,},
  send(code,down){if(!core)return;cstring(code,p=>core.sdl_key(p,+down));},
 });
 function clearKeyboard(){keyboard.clear();core?.sdl_keys_clear();}
@@ -70,7 +71,7 @@ async function installRuntimePack(pack){
   Module.FS.writeFile(file.path,file.bytes,{canOwn:true});runtimePackFiles.push(file.path);
  }
 }
-function applyOptions(){applyTouchOptions(core,options);}
+function applyOptions(){applyTouchOptions(core,options);core.sdl_always_hitbox(+(options.alwaysHitbox===true));}
 function status(){return Array.from(new Int32Array(core.memory.buffer,core.sdl_game_status(),10));}
 function save(){if(app)core.application_save(app);return sync(false);}
 async function resumeForegroundAudio(forcePause=false){
@@ -123,6 +124,7 @@ canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();clearK
 for(const name of ['pointerdown','keydown'])window.addEventListener(name,()=>{if(Module?.SDL3?.audioContext?.state!=='running')void resumeForegroundAudio(true);},{capture:true});
 for(const name of ['keydown','keyup'])window.addEventListener(name,event=>{
  if(!core||!launched||closing||document.hidden)return;
+ if(keyboard.mapNative(event,name==='keydown')){event.preventDefault();event.stopImmediatePropagation();return;}
  keyboard.event(event,name==='keydown');
 },{capture:true});
 const initialized=(async()=>{

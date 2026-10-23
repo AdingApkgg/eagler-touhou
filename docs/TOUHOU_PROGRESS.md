@@ -12,7 +12,7 @@
 | <img src="../launcher/docs/assets/game-covers/thumbnails/th11.jpg" width="40" height="40" alt="东方地灵殿"> | **[th11] 東方地霊殿 v1.00a** | [SteinsGateON](https://github.com/YomotsuHisami/th11/tree/main)<br>![Done][done] | [SteinsGateON](https://github.com/YomotsuHisami/th11/tree/main)<br>![Done][done] | [YomotsuHisami](https://github.com/YomotsuHisami/th11/tree/eagler)<br>[![In Progress][in-progress-detail]](#th11-web-适配) | [YomotsuHisami](https://github.com/YomotsuHisami/th11/tree/eagler)<br>[![In Progress][in-progress-detail]](#th11-多人联机) |
 | <img src="../launcher/docs/assets/game-covers/thumbnails/th12.jpg" width="40" height="40" alt="东方星莲船"> | **[th12] 東方星蓮船 v1.00b** | [Tweet-META](https://github.com/Tweet-META/th12/tree/main)<br>![In Progress][in-progress] | - | - | - |
 | <img src="../launcher/docs/assets/game-covers/thumbnails/th13.jpg" width="40" height="40" alt="东方神灵庙"> | **[th13] 東方神霊廟 v1.00c** | ![Unassigned][unassigned] | - | - | - |
-| <img src="../launcher/docs/assets/game-covers/thumbnails/th14.jpg" width="40" height="40" alt="东方辉针城"> | **[th14] 東方輝針城 v1.00b** | Asuna<br>![In Progress][in-progress]<br>[AdingApkgg/thp](https://github.com/AdingApkgg/thp)<br>![In Progress][in-progress] | [AdingApkgg/thp](https://github.com/AdingApkgg/thp)<br>![In Progress][in-progress] | [AdingApkgg/thp](https://github.com/AdingApkgg/thp)<br>![In Progress][in-progress] | - |
+| <img src="../launcher/docs/assets/game-covers/thumbnails/th14.jpg" width="40" height="40" alt="东方辉针城"> | **[th14] 東方輝針城 v1.00b** | Asuna<br>![In Progress][in-progress]<br>[AdingApkgg/thp](https://github.com/AdingApkgg/thp)<br>![In Progress][in-progress] | [AdingApkgg/thp](https://github.com/AdingApkgg/thp)<br>![In Progress][in-progress] | [AdingApkgg/thp](https://github.com/AdingApkgg/thp)<br>[![In Progress][in-progress-detail]](#th14-web-适配) | - |
 | <img src="../launcher/docs/assets/game-covers/thumbnails/th15.jpg" width="40" height="40" alt="东方绀珠传"> | **[th15] 東方紺珠伝 v1.00b** | [SteinsGateON](https://github.com/YomotsuHisami/th15/tree/main)<br>![Done][done] | [SteinsGateON](https://github.com/YomotsuHisami/th15/tree/main)<br>![Done][done] | [YomotsuHisami](https://github.com/YomotsuHisami/th15/tree/eagler)<br>![Done][done] | ![In Progress][in-progress] |
 | <img src="../launcher/docs/assets/game-covers/thumbnails/th16.jpg" width="40" height="40" alt="东方天空璋"> | **[th16] 東方天空璋 v1.00a** | ![Unassigned][unassigned] | - | - | - |
 | <img src="../launcher/docs/assets/game-covers/thumbnails/th17.jpg" width="40" height="40" alt="东方鬼形兽"> | **[th17] 東方鬼形獣 v1.00b** | ![Unassigned][unassigned] | - | - | - |
@@ -71,6 +71,18 @@
 | 规则 | 预测回滚 | 重开 | Replay | 旁观 |
 | :---: | :---: | :---: | :---: | :---: |
 | ✅ | ❌ | ✅ | ✅ | ✅ |
+
+## [th14] 東方輝針城 v1.00b
+
+### th14 Web 适配
+
+[AdingApkgg/thp](https://github.com/AdingApkgg/thp) 持续推进独立 C++ / Wasm 实现，保持进行中。
+
+- 已修正普通子弹命中的动画中断范围、对话指令的 Boss 名字创建与资源编号、HUD 和对话的回调顺序。
+- 原作对照样本的前 9000 次回调中，42648 次动画创建的句柄、文件和脚本一致；30 种自机／难度共 2885731 次回调通过回归检查。回归通过不代表全部模式已与原作等价。
+- 尚需完成跨关卡动画退休及后续创建差异、全部模式原作录像、图形、音频与存档验收，整作 1:1 未完成。
+
+[实现及验收记录](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MSG_HUD_ORDER_OCT24.md)
 
 ## [th15] 東方紺珠伝 v1.00b
 

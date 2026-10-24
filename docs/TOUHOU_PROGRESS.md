@@ -80,15 +80,15 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。源码：[AdingApkgg/thp，135fbea](https://github.com/AdingApkgg/thp/commit/135fbea87f9ae1e34993cb6f1ce9d4d2dc3569ec)，独立C++/Wasm实现，原作素材、录像与进程内存不随源码发布。
+- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。源码：[AdingApkgg/thp，39eeab8](https://github.com/AdingApkgg/thp/commit/39eeab874f8473b7231dad47a3dede50d93ecf31)，独立C++/Wasm实现，原作素材、录像与进程内存不随源码发布。
 - 新修复：按原作43642a→411f40/411980，在等待换关加载线程之前销毁旧Bomb控制器。此前晚约7帧回收咲夜A护罩，改变了空闲栈次序，先影响ASCII16的槽位，再传递到effect128。现在由正常ANM回收返回槽位，旧第90000帧句柄差异已消失，不强制槽号或序号。
 - 新修复：HUD血条环和Boss名按原作设置flags2 bit0x20退场。128组完整原作43014e..430c55控制，对照每组15个完整flags2字及既有状态；旧对象98个retired布尔差异、10组原始字数组差异和4组名字差异，当前零差。原有fixture的退场读取也纠正为flags2，不把旧删除位解释成原始字一致。
 - 咲夜A Normal同一完整六关录像在两份原作环境分别运行104802次Player回调到自然结束菜单，当前移植所选32字、25项相机及各七个291项快照全部一致。新原作进程另逐帧采样HUD显示分和内部计分，两者都对齐；终值分别283535260与324535260，三次菜单读取稳定。这是两个不同数值，不再把内部结算分当成HUD分。
 - 新原作进程初始131次与第75000～91000回调间79288次创建，句柄/文件/脚本有序记录全部一致；同段79292次销毁的边界、关卡、句柄、文件、脚本、flags2、timer、age八项全一致。首次Player到75000间未连续追踪分配，保留该空白。291项快照也不等于完整VM/几何或每帧全部对象。
-- 魔理沙A Normal66737回调、相机及六个291项快照一致，原作样本自然第五关GameOver。另12份控制504102回调全部重验，含灵梦B完整六关122012、六自机Extra、派生第六关和合法浏览器录像；连同两份咲夜A原作环境，共780443次所选32字一致。同一录像的重复环境不算独立输入；15个Extra的80项快照也重验。
+- 魔理沙A Normal66737回调、相机及六个291项快照一致，原作样本自然第五关GameOver。另12份控制504102回调全部重验，含灵梦B完整六关122012、六自机Extra、派生第六关和合法浏览器录像；连同两份咲夜A Normal原作环境及新Lunatic控制，共865395次所选32字一致。同一录像的重复环境不算独立输入；15个Extra的80项快照也重验。
 - 当前23caa6d5正式Launcher/WebGL独立合法短录像自然结束3980分、Graze4、最大得点10000、残机1，菜单稳定57.43秒，静音且无警告/错误。当前长回放仍需独立验收，不继承旧二进制结果；此前edb75600长回放已自然结束283535260分，另按其版本保留。
 - 先前D3DX矩阵舍入、Bomb动画家族清理、相机eye_offset/target_offset、HUD计时动画回收、续关保存、命中、阶段时钟、结局计分等修复保留。原作只在未触碰的首次Player后清一次attract位，无指令/RNG/序号/计数/健康/输入补偿；启动时钟、cookie、资源就绪及Player主机时序是明确环境输入，调试影响主机时序，就绪边界由首次主线程观察界定。
-- 完整Lunatic录像继续采样，GPU像素、PCM、全模式普通初始化、完整VM/几何及持久化验收仍未完成。范围：[换关销毁与HUD报告](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_STAGE_OWNER_RETIREMENT_OCT24.md)；[矩阵与Bomb家族报告](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MATRIX_AND_BOMB_RETIREMENT_OCT24.md)。
+- 完整咲夜A Lunatic六关原作84952回调已自然结束，当前所选32字、25项相机及两项HUD/内部计分逐帧一致，七个303项快照和156037次前30000有序发布全部一致；HUD620792200/内部742792200，菜单稳定90帧。Normal咲夜A与魔理沙A也扩展到303项，三组合计20快照、累计5247行；新增链连接、中断保存状态、spriteFrame和颜色缓存，不等于完整VM。魔理沙B Normal新采样继续。GPU像素、PCM、全模式普通初始化、完整VM/几何及持久化仍未完成。范围：[完整Lunatic与303项报告](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_LUNATIC_AND_VM303_OCT25.md)；[换关销毁与HUD报告](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_STAGE_OWNER_RETIREMENT_OCT24.md)；[矩阵与Bomb家族报告](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MATRIX_AND_BOMB_RETIREMENT_OCT24.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

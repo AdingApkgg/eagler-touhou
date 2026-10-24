@@ -80,16 +80,16 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。独立C++/Wasm源码：[AdingApkgg/thp，45142d9](https://github.com/AdingApkgg/thp/commit/45142d9d5aaabad1a97c71d4a550a45eb12b5c82)；原作素材、录像、内存与编译产物不随源码发布。
-- 最新修复：TH14相机right叉积按原作446539..44659d每次乘法先舍入float32再相减。2053组原指令/实际x86 D3DX控制，旧2247个分量差异、当前零差。灵梦A Normal六关85035回调、所选32字/25相机/HUD全部一致；动画Z字19差异单列。
-- 先前修复：六自机Bomb创建动画时保留资源模板图层，按原作47ed10调用传-1。旧实现传0，覆盖了魔理沙B file9/script28的图层（原作6/移植0）。72组原作启动控制比较132次创建请求，旧132差异、当前零差；原作目标指令不改写，13处声明的分配/ANM/声音/HUD/伤害区域服务桩属于测试边界。
-- 魔理沙B Normal保留原始六段输入，本机原作自然第二关GameOver，不能称六关通关。27751次Player回调的所选32字、25相机值和HUD/内部计分两字全部一致；两个303项快照、注册顺序及176509次有序发布一致，终分48407120。此前32ccfbea长浏览器回放已自然第二关结束48407120分、菜单稳定133.223秒，按该二进制保存。
-- 咲夜A Normal104802、Lunatic84952、魔理沙A Normal66737重新验证；四组累计22个303项快照、5836行全部一致。另13份控制608904回调通过，连同额外灵梦A的状态控制，本轮共978181次所选32字一致，含灵梦B六关、六自机Extra、派生第六关、合法短录像及同一录像的重复原作环境，不等于全模式或独立输入数量。三个Extra的15个80项快照也重验。
-- 新灵梦A Normal原作六关自然结束85035回调，所选32字、HUD和分配顺序一致，当前相机right.z原15771次一ULP差异已消除；命中特效worldZ仍有19个原始字差异，来自原作未初始化polar栈Z，保留为失败，不掩码或每帧输入原作结果。
-- 当前SDLc90555d2正式Launcher/WebGL合法短录像自然结束3980分，菜单稳定40.05秒，静音且无警告/错误。此前23caa6d5的完整六关浏览器录像独立自然结束283535260分、菜单稳定42.059秒，按其二进制保存，不继承到当前构建。
-- 当前生产渲染器重新实测：21幅完整颜色缓冲20幅一致，三面1199帧(144,373)蓝色119/120仍为严格失败。新D3D9 HAL参考25804800字节与冻结参考一致。UV47组完整哈希全一致，本次实际重读28份原版完整字节、另19份历史完整哈希；2560透明遮挡场景整组哈希和915个常量D16值一致。初次漏接UV诊断输出的4/47结果保留为无效工具配置，修正后47/47，生产图形源码未改。
-- 先前换关前销毁Bomb、HUD flags2退场、D3DX矩阵舍入、相机偏移、加载HUD回收、续关与结算等修复保留。原作仅首次Player后清一次attract位，无RNG/序号/计数/健康/输入补偿；原作时钟、cookie、资源就绪及主机时序是明确环境输入，调试影响主机时序。咲夜B Normal新采样前20000回调已对齐状态/相机/HUD和98270次发布，完整采样继续；仍需完成灵梦A栈Z差异、全模式普通初始化、完整VM/几何、剩余GPU差异、PCM及完整持久化。
-- 范围报告：[相机叉积舍入](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CAMERA_CROSS_OCT25.md)、[模板图层与录像](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_BOMB_TEMPLATE_LAYER_OCT25.md)、[当前GPU复验](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURRENT_GPU_BASELINE_OCT25.md)、[完整Lunatic与303项](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_LUNATIC_AND_VM303_OCT25.md)、[换关销毁与HUD](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_STAGE_OWNER_RETIREMENT_OCT24.md)。
+- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。独立C++/Wasm源码：[AdingApkgg/thp，724a2ef](https://github.com/AdingApkgg/thp/commit/724a2ef96436c3e8a6d51b7c899edf7dea4b0525)；原作素材、录像、内存与编译产物不随源码发布。
+- 最新修复：Boss名称HUD读取原作全局4f5844的符卡练习选择，独立于当前战斗Spell+78编号，修正四面分支选名。3528组实际GameBattle::hud_input/HUD接口控制，旧117个脚本差异、当前零差。咲夜B Normal新原作六关自然结束112201回调，所选32字、25相机与HUD/内部计分两字全部一致；七个303项动画快照、1565行及登记顺序全部一致，原60000回调的脚本156/157和四个UV字差异归零。
+- 咲夜B前30000回调的308819次有序发布一致；HUD终分1487617860，内部终分1570617860。该录像保持原始关卡头、输入及FPS，不以逐帧状态覆盖消除差异；后续分配仅按实际采样范围表述。
+- 本次重验咲夜A Normal104802/Lunatic84952、魔理沙A Normal66737、魔理沙B Normal27751、灵梦A Normal85035和原13份控制608904回调。连同咲夜B，所选32字累计1090382回调一致，含重复原作环境和派生输入；五组严格通过的303项快照共29检查点、7401行，不等于全模式或完整VM。三个Extra的15个80项快照继续通过。
+- 灵梦A相机right叉积按原作446539..44659d逐乘积舍入float32，原15771次一ULP差异已消除；2053组原指令/实际x86 D3DX控制零差。命中特效worldZ仍有19个原始字差异，来自原作未初始化polar栈Z，保留为失败，不掩码或每帧输入原作结果。
+- 六自机Bomb按原作47ed10传-1以保留资源模板图层；72组原作启动控制、132次创建请求零差。魔理沙B Normal原作自然第二关GameOver27751回调，不能称六关通关；状态/相机/HUD、两个303项快照和176509次有序发布一致，终分48407120。此前32ccfbea浏览器回放自然第二关结束、菜单稳定133.223秒，按该二进制独立保存。
+- 当前SDLc0d31c72正式Launcher/WebGL合法短录像自然结束3980分，菜单稳定45.62秒，静音且无警告/错误。当前咲夜B长浏览器回放尚待完整验收；此前23caa6d5的六关浏览器回放自然283535260分结束、菜单稳定42.059秒，不继承到当前构建。
+- 当前生产渲染器严格颜色20/21，三面1199帧(144,373)蓝色119/120仍失败。新D3D9 HAL参考25804800字节与冻结参考一致；UV47组完整哈希一致，本次重读28份原作完整字节、另19份历史完整哈希；2560透明遮挡整组哈希和915个常量D16值一致。168个绘制前缀将该蓝差追到第4次绘制；浮点隔离控制在两个关键点的雾系数一致，纹理采样值不同，继续定位，生产渲染器未据此修改。
+- 换关前销毁Bomb、HUD flags2退场、D3DX矩阵、加载HUD回收、续关与结算等修复保留。原作只在首次Player后清一次attract位，无RNG/序号/计数/健康/输入补偿；时钟、cookie、资源就绪和主机时序为明确环境输入，调试会影响时序。魔理沙B Hard原作完整输入采样继续；灵梦A栈Z、全模式普通初始化、完整VM/几何、剩余GPU差异、PCM及完整持久化未完成。
+- 范围报告：[HUD名称输入与咲夜B](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_HUD_NAME_INPUT_OCT25.md)、[相机叉积](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CAMERA_CROSS_OCT25.md)、[模板图层](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_BOMB_TEMPLATE_LAYER_OCT25.md)、[当前GPU](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURRENT_GPU_BASELINE_OCT25.md)、[完整Lunatic与303项](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_LUNATIC_AND_VM303_OCT25.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

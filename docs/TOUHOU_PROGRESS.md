@@ -80,15 +80,15 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [1eaa633](https://github.com/AdingApkgg/thp/commit/1eaa6338e928e6588567334a8b7583d27d8e44d8)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [6c7d306](https://github.com/AdingApkgg/thp/commit/6c7d3065714cd5c1393ccc9d53ce951c5b91abc4)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
 - 已修复曲线激光生成原点，魔理沙 A Hard 四面 14 个对象的 28 项 X/Y 字差消失；该原版记录五面自然结束 75,921 回调，所列状态、相机、HUD、动画和战斗对象门槛独立复算一致，仍缺六面覆盖。灵梦 B Normal 完整 122,537 回调、Hard 完整 107,662 回调的所列门槛继续通过。
 - 新增实际原版文件对照：未改动原版独立进程在私有 APPDATA 写出的 21,633 字节存档，经当前生产读取、记录同步和重存后全字节不变；原版机器码独立复核全部 149,076 字节记录及编码文件。普通菜单开始游戏、浏览器刷新和持久化仍未验收。
-- 咲夜 A Hard 在五面 60,393 回调后进程退出，未观察到录像终止标记或结束菜单；仅作为显式诊断前缀，所选状态、相机、HUD、2,585 行动画采样和 891 个战斗检查点一致，其中 323 个战斗检查点非空。未增加自然结束数量，退出原因仍待查。
+- 咲夜 A Hard 旧采集在五面 60,393 回调后进程退出，未观察到结束菜单，只作为显式诊断前缀保留；旧工具未实现独立录像终止标记观察。新同录像采集已超过旧退出位置并进入六面，仍在运行，尚不增加自然结束数量。
 - 模式清单维持 30 组中 21 组原版自然结束记录、17 组观察到全部目标关卡入口；提前 GameOver、通关和模式等价分别判断。其余相机、effect149 和 RNG 字差保留。工具默认完整记录分支仍要求结束菜单，未标明诊断前缀的上述咲夜记录必须失败；200 回调有界实验确认观察器能记录主动终止与退出码，退出码 0 不作为自然完成条件。
-- 当前图像范围仍有三面单像素蓝色 119／120 差异，未据组件线索修改生产渲染器。静音 SDL 候选 11d5c78c 的普通浏览器流程仍未验收；实际浏览器控制因工具无法识别 URL 而停止，未继续界面输入或以其他自动化绕过。
+- 三面单像素蓝色 119／120 差异取得新的离屏定位：留存浏览器 INITIAL HLSL 的独立 D3D11 重建，横向 UV 两个浮点最小单位跨过滤波取整边界；把半像素偏移由裁剪前改为浮点视口变换后，目标 UV、RGBA32F 颜色和雾因子与原版组件一致。当前 WebGL 生产渲染器未修改，实际浏览器仍为 20／21 场景全缓冲一致，剩余失败和普通浏览器验收继续保留。
 - 普通原版流程、完整图像／原版 PCM／持久化及所有模式继续；原始资产和内存不随源码发布，维持 100GiB 空间和单次 2GiB 观察预算。
-- 范围报告：[原版存档与结束边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_NATIVE_BOUNDARIES_OCT26.md)、[曲线原点](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURVE_ORIGIN_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 范围报告：[裁剪与偏移次序](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_BACKGROUND_CLIP_ORDER_OCT26.md)、[原版存档与结束边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_NATIVE_BOUNDARIES_OCT26.md)、[曲线原点](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURVE_ORIGIN_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

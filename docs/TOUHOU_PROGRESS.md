@@ -80,16 +80,17 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [d57762c](https://github.com/AdingApkgg/thp/commit/d57762cc90b4ba9c3bba12a406eede97d54776c5)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [5477b29](https://github.com/AdingApkgg/thp/commit/5477b29145628cb9762ad609644dad82b3f478cb)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
 - 已修复曲线激光生成原点和敌弹命中特效位移。魔理沙 A Hard 五面自然结束 75,921 回调，所列门槛通过，仍缺六面覆盖；灵梦 B Hard 完整 107,662 回调的有限门槛通过。
 - 新修正原版 Scene 跨更新的相机交付窗口：只使用实际原指令边界和时间戳，不向引擎注入相机值。灵梦 A Hard 完整 96,103 回调的状态32字、相机25字、HUD2字、1,162个战斗检查点一致；原相机差消除，仍有6个effect149根worldZ字差，严格完整门槛继续失败。同诊断Wasm、同输入56,000回调A/B中，相机字差由933降至0。
-- 新增灵梦 A Lunatic 原版自然结束86,751回调，观察到一至六面。所选状态、相机、HUD及1,133个战斗检查点一致，保留5个同类动画Z字差，未标为完整通过。336组合成栈原指令实验确认命中回调会读取未写栈Z；仅证明所列受控输入，不证明实际栈来源或后续生命周期，不放宽原始差异门槛。
+- 新增灵梦 A Lunatic 原版自然结束86,751回调，观察到一至六面。所选状态、相机、HUD及1,133个战斗检查点一致，保留5个同类动画Z字差，未标为完整通过。336组合成栈原指令实验确认命中回调会读取未写栈Z；实际栈来源与任意外部干预仍未证明，不放宽原始差异门槛。
+- 新增effect149家族完整有限生命周期组件：48组、三种时间步长及两种种子，原版实际工厂／全局动画更新／两个子对象直至家族销毁；除声明根Z外的4,224对原版完整VM字节及2,208对几何保持一致，X位移控制均改变几何。生产C++/Wasm的5,808边界、5,632行303字动画、2,944次几何及退休顺序一致。仅对照归一化分配环境下的对象身份，不声称原始句柄或完整回放通过。
 - 此次调度修改后，咲夜 A Hard 完整96,682回调、动画2,020行／850个战斗检查点，以及灵梦 B Normal 完整122,537回调、动画2,586行／1,294个战斗检查点，通过独立原始字节复算。旧咲夜60,393回调退出记录继续保留为前缀，其退出原因未证明。
 - 30组清单现为23组原版自然结束记录、19组观察到全部目标关卡入口；提前GameOver、通关与模式等价分别判断。其他相机、RNG和动画差异继续。实际原版存档21,633字节与解码149,076字节已有生产及原指令复核；普通菜单和浏览器持久化仍未验收。
 - 当前生产图形未修改，实际浏览器仍为20／21场景全缓冲一致，保留三面单像素蓝119／120差。离屏裁剪／半像素偏移实验只用于定位，不作为WebGL已修复或实际浏览器验收。普通流程、所有模式、完整图像、原版PCM及持久化继续。
 - 原始资产和内存不随源码发布；测试保持静音，维持100GiB空间和单次2GiB观察预算。
-- 范围报告：[场景交付与保留差异](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SCENE_HANDOFF_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 范围报告：[effect149有限生命周期](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_EFFECT149_RETIREMENT_OCT26.md)、[场景交付与保留差异](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SCENE_HANDOFF_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

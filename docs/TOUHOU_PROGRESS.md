@@ -80,14 +80,15 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [e5542ed](https://github.com/AdingApkgg/thp/commit/e5542ed7ad0a0bd4a93db62a81922e592a811764)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [1eaa633](https://github.com/AdingApkgg/thp/commit/1eaa6338e928e6588567334a8b7583d27d8e44d8)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
-- 新修复曲线激光生成原点：原版保存偏移后的请求位置，旧移植错用非零初始时间采样后的曲线头部。26 组原版构造器组件用例确认两者区别；魔理沙 A Hard 四面 14 个对象的 28 项 X/Y 字差消失。
-- 魔理沙 A Hard 原版记录在五面自然结束，共 75,921 回调。修复后所选状态、相机、HUD、1,891 个动画对象及 903 个战斗检查点独立复算一致，其中 358 个战斗检查点非空。仍缺六面覆盖，不将此项视为完整模式等价。灵梦 B Normal 完整 122,537 回调、Hard 完整 107,662 回调的所列门槛继续独立回归通过。
-- 模式清单：30 组中 21 组有原版自然结束记录，17 组观察到全部目标关卡入口；包含提前 GameOver，与通关和模式等价分开。其余已记录的相机、effect149 和 RNG 字差仍保留。
-- 单像素颜色差未关闭：离屏 D3D9 逐绘制读取将目标像素末次变化定位到第 92–95 个调用，插入读取后的最终整幅缓冲仍与原参考逐字节一致。四层 RGBA32F 组件数据已取得，生产渲染器未据此修改。
-- 新静音 SDL 候选 11d5c78c 已生成；普通原版流程、实际浏览器入口、完整图像／原版 PCM／持久化及所有模式继续。原始资产和内存不随源码发布，维持 100GiB 空间和单次 2GiB 观察预算。
-- 范围报告：[曲线原点](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURVE_ORIGIN_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 已修复曲线激光生成原点，魔理沙 A Hard 四面 14 个对象的 28 项 X/Y 字差消失；该原版记录五面自然结束 75,921 回调，所列状态、相机、HUD、动画和战斗对象门槛独立复算一致，仍缺六面覆盖。灵梦 B Normal 完整 122,537 回调、Hard 完整 107,662 回调的所列门槛继续通过。
+- 新增实际原版文件对照：未改动原版独立进程在私有 APPDATA 写出的 21,633 字节存档，经当前生产读取、记录同步和重存后全字节不变；原版机器码独立复核全部 149,076 字节记录及编码文件。普通菜单开始游戏、浏览器刷新和持久化仍未验收。
+- 咲夜 A Hard 在五面 60,393 回调后进程退出，未观察到录像终止标记或结束菜单；仅作为显式诊断前缀，所选状态、相机、HUD、2,585 行动画采样和 891 个战斗检查点一致，其中 323 个战斗检查点非空。未增加自然结束数量，退出原因仍待查。
+- 模式清单维持 30 组中 21 组原版自然结束记录、17 组观察到全部目标关卡入口；提前 GameOver、通关和模式等价分别判断。其余相机、effect149 和 RNG 字差保留。工具默认完整记录分支仍要求结束菜单，未标明诊断前缀的上述咲夜记录必须失败；200 回调有界实验确认观察器能记录主动终止与退出码，退出码 0 不作为自然完成条件。
+- 当前图像范围仍有三面单像素蓝色 119／120 差异，未据组件线索修改生产渲染器。静音 SDL 候选 11d5c78c 的普通浏览器流程仍未验收；实际浏览器控制因工具无法识别 URL 而停止，未继续界面输入或以其他自动化绕过。
+- 普通原版流程、完整图像／原版 PCM／持久化及所有模式继续；原始资产和内存不随源码发布，维持 100GiB 空间和单次 2GiB 观察预算。
+- 范围报告：[原版存档与结束边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_NATIVE_BOUNDARIES_OCT26.md)、[曲线原点](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURVE_ORIGIN_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

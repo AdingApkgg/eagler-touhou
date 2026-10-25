@@ -80,15 +80,16 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [fbd8642](https://github.com/AdingApkgg/thp/commit/fbd8642067afefa0ddb8c1ca764405f3639c5b19)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [d57762c](https://github.com/AdingApkgg/thp/commit/d57762cc90b4ba9c3bba12a406eede97d54776c5)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
-- 已修复曲线激光生成原点，魔理沙 A Hard 四面 14 个对象的 28 项 X/Y 字差消失；该原版记录五面自然结束 75,921 回调，所列状态、相机、HUD、动画和战斗对象门槛独立复算一致，仍缺六面覆盖。灵梦 B Normal 完整 122,537 回调、Hard 完整 107,662 回调的所列门槛继续通过。
-- 新增实际原版文件对照：未改动原版独立进程在私有 APPDATA 写出的 21,633 字节存档，经当前生产读取、记录同步和重存后全字节不变；原版机器码独立复核全部 149,076 字节记录及编码文件。普通菜单开始游戏、浏览器刷新和持久化仍未验收。
-- 咲夜 A Hard 新同录像原版记录自然结束 96,682 回调，观察到一至六面；完整所选状态、相机、HUD、七次动画采样共 2,020 行及 850 个战斗检查点独立复算一致，其中 311 个战斗检查点非空。前 1,000 回调窗口的 2,204 项分配顺序一致。旧 60,393 回调进程退出记录继续保留为诊断前缀，旧退出原因未复现或证明修复。
-- 模式清单现为 30 组中 22 组原版自然结束记录、18 组观察到全部目标关卡入口；提前 GameOver、通关与模式等价分别判断。其他相机、effect149、RNG 字差及缺少完整记录的组合继续。观察器默认完整记录门槛仍要求原版结束菜单，诊断停止与自然菜单结束已分开，未实现的独立终止标记显式为 null，退出码 0 不作为自然结束条件。
-- 三面单像素蓝色 119／120 差异取得新的离屏定位：留存浏览器 INITIAL HLSL 的独立 D3D11 重建，横向 UV 两个浮点最小单位跨过滤波取整边界；把半像素偏移由裁剪前改为浮点视口变换后，目标 UV、RGBA32F 颜色和雾因子与原版组件一致。当前 WebGL 生产渲染器未修改，实际浏览器仍为 20／21 场景全缓冲一致，剩余失败和普通浏览器验收继续保留。
-- 普通原版流程、完整图像／原版 PCM／持久化及所有模式继续；原始资产和内存不随源码发布，维持 100GiB 空间和单次 2GiB 观察预算。
-- 范围报告：[咲夜 A Hard](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SAKUYAA_HARD_OCT26.md)、[裁剪与偏移次序](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_BACKGROUND_CLIP_ORDER_OCT26.md)、[原版存档与结束边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_NATIVE_BOUNDARIES_OCT26.md)、[曲线原点](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURVE_ORIGIN_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 已修复曲线激光生成原点和敌弹命中特效位移。魔理沙 A Hard 五面自然结束 75,921 回调，所列门槛通过，仍缺六面覆盖；灵梦 B Hard 完整 107,662 回调的有限门槛通过。
+- 新修正原版 Scene 跨更新的相机交付窗口：只使用实际原指令边界和时间戳，不向引擎注入相机值。灵梦 A Hard 完整 96,103 回调的状态32字、相机25字、HUD2字、1,162个战斗检查点一致；原相机差消除，仍有6个effect149根worldZ字差，严格完整门槛继续失败。同诊断Wasm、同输入56,000回调A/B中，相机字差由933降至0。
+- 新增灵梦 A Lunatic 原版自然结束86,751回调，观察到一至六面。所选状态、相机、HUD及1,133个战斗检查点一致，保留5个同类动画Z字差，未标为完整通过。336组合成栈原指令实验确认命中回调会读取未写栈Z；仅证明所列受控输入，不证明实际栈来源或后续生命周期，不放宽原始差异门槛。
+- 此次调度修改后，咲夜 A Hard 完整96,682回调、动画2,020行／850个战斗检查点，以及灵梦 B Normal 完整122,537回调、动画2,586行／1,294个战斗检查点，通过独立原始字节复算。旧咲夜60,393回调退出记录继续保留为前缀，其退出原因未证明。
+- 30组清单现为23组原版自然结束记录、19组观察到全部目标关卡入口；提前GameOver、通关与模式等价分别判断。其他相机、RNG和动画差异继续。实际原版存档21,633字节与解码149,076字节已有生产及原指令复核；普通菜单和浏览器持久化仍未验收。
+- 当前生产图形未修改，实际浏览器仍为20／21场景全缓冲一致，保留三面单像素蓝119／120差。离屏裁剪／半像素偏移实验只用于定位，不作为WebGL已修复或实际浏览器验收。普通流程、所有模式、完整图像、原版PCM及持久化继续。
+- 原始资产和内存不随源码发布；测试保持静音，维持100GiB空间和单次2GiB观察预算。
+- 范围报告：[场景交付与保留差异](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SCENE_HANDOFF_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

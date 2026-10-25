@@ -80,15 +80,16 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。独立C++/Wasm源码：[AdingApkgg/thp，6526182](https://github.com/AdingApkgg/thp/commit/6526182b593605e6d29d814cd5d74629d055b9d7)；公开内容仅源码、测试与范围报告，原作素材、录像、内存及编译产物不随源码发布。
+- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。独立C++/Wasm源码：[AdingApkgg/thp，defcddc](https://github.com/AdingApkgg/thp/commit/defcddc204c2b883d7f663ab946a7d503d5f351b)；公开内容仅源码、测试与范围报告，原作素材、录像、内存及编译产物不随源码发布。
 - 最新修复：活动静止伤害圈每次更新也执行原作403df0/4040dc的float32向下量化XY到0.01，修正死亡伤害圈残留1/128坐标而提前接触的问题。2400组原指令控制、9600次更新、16个原始字段，旧12128差异、当前零差；移动/floor原指令均未替换。
-- 魔理沙B Hard完整原始六关录像119048回调，所选32字状态、25项相机全程一致；七个303项动画快照2142行及登记顺序一致，前30000次269922个有序发布一致。五面4577帧敌机148提前受到12伤害并提前死亡的计分/RNG分歧、90000回调384个动画差异均消除。最终HUD/内部计分1204638210/1305638210一致；仍有四次换关第0帧HUD显示初始化字差异，不称全程完全等价。新的完整HUD写入时刻原作采样继续。
+- 魔理沙B Hard在新原版环境完整复跑119048回调，提供42ec6b实际HUD初始化写完时刻后，所选32字状态、25项相机、HUD显示/内部两字全程一致；七个303项动画检查点2142行及登记顺序、前30000回调269922次有序发布一致。独立检查器重读原版字节并重算，原五面提前伤害/死亡及计分/RNG、晚期动画分歧已消除；旧环境四个HUD初始化字失败继续保留。启动创建时刻从首次ASCII发布边界推断，二面HUD/Scene排队未捕获，Scene/Timeline就绪仍为主线程边界观测，不称整作完全等价。
+- 灵梦B Hard新采样直接在原版44477a→47ed10调用前读取启动创建时刻；前1000回调的所选状态/相机/HUD、初始303项快照与5190次发布一致，完整六关采样继续。误选420d20的失败入口采样零回调，未计通过；新的战斗池只读观察器仍在验证，未据此宣称全池一致。
 - 五面派生片段保留关卡头、输入与FPS，6000回调所选状态/相机、初始303项快照和46324次有序发布一致；4500至4640帧141份只读敌机/自机/伤害圈/自机弹语义字段一致，初始HUD夹具85次差异保留。另16000回调采样使用原作42ec6b实际写完时刻作为环境输入，本构建状态/相机/HUD/初始303项及101130次发布一致；漏掉的资源排队观测仍保留为缺口，无原作分数值输入。
-- 原有1090382次所选32字控制在本构建重验通过，连同本次Hard共1209430回调；含重复原作环境和派生输入，不等于全模式。严格303项控制共36检查点、9543行。灵梦A相机right叉积原15771次一ULP差异已解决；命中特效worldZ仍19个原始字差异，来自未初始化polar栈Z，继续保留。三个Extra的15个80项快照保持通过。
+- 原有1090382次所选32字控制在本构建重验通过，连同本次Hard共1328478回调；含重复原作环境和派生输入，不等于全模式。严格303项控制共43检查点、11685行。灵梦A相机right叉积原15771次一ULP差异已解决；命中特效worldZ仍19个原始字差异，来自未初始化polar栈Z，继续保留。三个Extra的15个80项快照保持通过。
 - 此前ECL自机重合取角匹配原作+π/2，1725次实际getter调用由219差异归零，消除Hard二面分歧；Boss名称HUD改读全局练习选择4f5844，3528组实际接口由117差异归零。六自机Bomb保留模板图层、换关销毁Bomb、HUD flags2退场、D3DX矩阵、加载HUD回收、续关和结算修复保留。
-- 当前SDL8b7ef3f9正式Launcher/WebGL合法短录像自然3980分结束，菜单稳定31.847秒，静音且无警告/错误；当前构建Hard完整浏览器回放继续。此前c0d31c72咲夜B浏览器六关自然1487617860分结束、菜单稳定861.97秒，按该二进制独立保存，不继承到当前构建。魔理沙B Normal原作27751回调及此前浏览器均自然第二关GameOver，不能称六关通关。
+- 当前SDL8b7ef3f9正式Launcher/WebGL合法短录像自然3980分结束，菜单稳定31.847秒，静音且无警告/错误；当前构建Hard已在实际Launcher/WebGL观察到自然结束，HUD1204638210、Graze41516、最大得点175510、残机8，开始后无输入且输出静音；该次完整回放结束后的稳定时长尚未核验。此前c0d31c72咲夜B浏览器六关自然1487617860分结束、菜单稳定861.97秒，按该二进制独立保存，不继承到当前构建。魔理沙B Normal原作27751回调及此前浏览器均自然第二关GameOver，不能称六关通关。
 - 生产渲染器未修改，严格颜色20/21，三面1199帧(144,373)蓝色119/120仍失败；新增第4次绘制UV控制U差1~2个float步长，V及关键点雾系数一致；统一视口算式候选未通过，未合入。原47组UV、2560透明遮挡整组哈希及915常量D16值按各自范围保留。原作只在首次Player后清一次attract位，无RNG/序号/计数/健康/输入补偿；时钟、cookie、资源就绪与主机时序为明确环境输入。全模式普通初始化、完整VM/几何、剩余GPU差异、PCM及完整持久化均未完成。
-- 范围报告：[静止伤害圈与Hard全程控制](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_DAMAGE_AREA_SNAP_OCT25.md)、[重合取角](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_PLAYER_AIM_OCT25.md)、[HUD名称与咲夜B](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_HUD_NAME_INPUT_OCT25.md)、[当前GPU](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURRENT_GPU_BASELINE_OCT25.md)。
+- 范围报告：[HUD完整重跑与启动边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_HUD_COMPLETION_OCT25.md)、[静止伤害圈与Hard全程控制](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_DAMAGE_AREA_SNAP_OCT25.md)、[重合取角](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_PLAYER_AIM_OCT25.md)、[HUD名称与咲夜B](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_HUD_NAME_INPUT_OCT25.md)、[当前GPU](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURRENT_GPU_BASELINE_OCT25.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

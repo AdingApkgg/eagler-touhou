@@ -80,14 +80,14 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [eb74dba](https://github.com/AdingApkgg/thp/commit/eb74dbaafeefe385a859485422fe6d2b73ac39b0)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [5cf40cb](https://github.com/AdingApkgg/thp/commit/5cf40cb4e09d27a63b97259618560ec770c85af6)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
-- 模式清单：30 组中 18 组有原版自然结束记录，15 组观察到全部目标关卡入口；包含提前 GameOver，不代表通关和模式等价。各构建的所选 32 字、相机、HUD、动画和战斗对象结果分别列出，缺少记录不算通过。
-- 灵梦 B Hard：107,662 次回调及所列相机、HUD、2,041 行 303 项动画、1,496 个战斗对象检查点经独立原始数据复算通过，范围限于这一录像与声明环境。
-- 灵梦 B Lunatic：104,110 次回调所选 32 字、HUD、动画与所选战斗对象一致，相机 right 三项各有 21,948 次差异，整段未通过。此前退出码遗漏额外失败门槛已修正；同一完整记录在新版比较器中实际退出 1。
-- 灵梦 A Easy：100,718 次回调所选 32 字及 HUD 一致，仍有相机、14 个特效 Z 字及一个伤害区域 Z 字差。灵梦 B Easy 采集中；前缀暴露同帧控制器／Player 之间的加载完成边界，未记通过。新增精确控制器与 Scene 复制前观察入口尚未实际验收。
-- 本批只更新观察／比较工具、失败范围和生成资源共享，生产玩法、图形和音频未改。当前 SDL 7bebd2ed 的完整浏览器验收、普通原版全流程、其余模式、像素／PCM 与持久化仍待完成；旧版结果不自动继承。测试静音，保留 100GiB 可用空间和单次 2GiB 观察预算。
-- 范围报告：[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[失败门槛与时序边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CAMPAIGN_GAPS_OCT26.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 模式清单：30 组中 19 组有原版自然结束记录，16 组观察到全部目标关卡入口；包含提前 GameOver，分别记录通关和模式等价，不据旧构建继承通过。
+- 比较宿主分开交付资源、控制器、Player 与绘制阶段的事件，不注入原版 RNG、计数器或相机值。灵梦 B Easy 旧记录的时钟错位消失，但完整 239,234 回调仍有五面加载同一回调中的两个 RNG 字差及相机缓存差，整段未通过；HUD、13 个动画检查点及 1,501 个战斗对象检查点一致。
+- 独立 26,000 回调短采集实际观察了控制器与 Scene 复制前后；两种交付均通过该前缀，未据此称旧失败已复现或修完。灵梦 A Hard 新采集加入实际恢复 RNG 的 456133 边界，首 12,000 回调通过，完整采集继续。旧交付完整 Hard 107,662 回调继续经原始数据独立复算通过。
+- 原指令组件实验：33 个隐藏 effect149 根跳过直接绘制，其 39 个现存子节点的采样顶点不受所列父 Z 差影响；30 个相机输入在原版／真实 D3DX 重新计算后不受旧 right 值影响。完整生命周期、全部绘制调用和像素尚未据此关闭，原始比较失败仍保留。
+- 本批只改观察及测试宿主，生产玩法／渲染／音频未改。普通原版全流程、其余模式、完整图像／PCM／持久化及当前 SDL 7bebd2ed 的浏览器验收继续。测试静音，保留 100GiB 空间和单次 2GiB 观察预算。
+- 范围报告：[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[回调边界和字差用途](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CALLBACK_BOUNDARY_OCT26.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

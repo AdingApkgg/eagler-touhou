@@ -80,19 +80,14 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 状态：进行中，整作1:1未完成；当前主要工作仅TH14。独立C++/Wasm源码：[AdingApkgg/thp，8378935](https://github.com/AdingApkgg/thp/commit/837893517e8faa4bbb2677ce1cc22f9453f6e536)；公开内容仅源码、测试与范围报告，原作素材、录像、内存及编译产物不随源码发布。
-- 模式验收已列30组：17组有原版自然结束记录，14组观察到全部目标关卡入口；包含二/三/五面提前GameOver的历史记录，不将记录存在或全部入口视作通关和模式等价。旧版结果不自动继承。
-- 对照夹具与构建/比较工具已迁入仓库并参数化，复用141个核心对象，完整Hard及1508份输出逐字节核验一致。灵梦B Lunatic原完整104544回调因四面主线程完成位观测缺口拒绝整段通过，一至三面38530回调及521个对象检查点通过。新采集在436053清位后的43605a直接读完成时刻，二至四面已捕获；前40000回调状态/相机/HUD、动画及485个所选对象检查点一致，完整运行继续。无生产玩法/图形/音频改动，仍未完成整作1:1。
-- 最新修复：换关时在敌人回收和加载等待前清空道具池，对齐原版4363ea→41d8c0，避免残留道具在加载期间被收取。灵梦B Hard第五面原83帧Bomb碎片差异归零。测试资源和运行包改为私有只读内容共享，采样保留100GiB空间、单次观察上限2GiB，不启动无界接续队列。
-- 此前修复：活动静止伤害圈每次更新也执行原作403df0/4040dc的float32向下量化XY到0.01，修正死亡伤害圈残留1/128坐标而提前接触的问题。2400组原指令控制、9600次更新、16个原始字段，旧12128差异、当前零差；移动/floor原指令均未替换。
-- 魔理沙B Hard在新原版环境完整复跑119048回调，提供42ec6b实际HUD初始化写完时刻后，所选32字状态、25项相机、HUD显示/内部两字全程一致；七个303项动画检查点2142行及登记顺序、前30000回调269922次有序发布一致。独立检查器重读原版字节并重算，原五面提前伤害/死亡及计分/RNG、晚期动画分歧已消除；旧环境四个HUD初始化字失败继续保留。启动创建时刻从首次ASCII发布边界推断，二面HUD/Scene排队未捕获，Scene/Timeline就绪仍为主线程边界观测，不称整作完全等价。
-- 灵梦B Hard完整原版采集自然结束107662回调；修复后同一数据重算，所选32字、相机25字、HUD两字全程一致，七个303字动画检查点2041行及登记顺序一致。1496个只读对象检查点的敌人31/子弹18/自机弹19/伤害圈19/道具13/激光26字一致，包含空加载帧，未比较全部对象字节及曲线样本。未触碰启动和前1000回调5189次有序发布一致；更晚发布不在本次连续追踪范围。启动时刻直接观察44477a调用；Scene/Timeline完成时刻仍受主线程观察边界约束。曲线激光观察器已改读实际path游标，对应原版+594；生产激光逻辑未改，旧十个观察差异保留。
-- 五面派生片段保留关卡头、输入与FPS，6000回调所选状态/相机、初始303项快照和46324次有序发布一致；4500至4640帧141份只读敌机/自机/伤害圈/自机弹语义字段一致，初始HUD夹具85次差异保留。另16000回调采样使用原作42ec6b实际写完时刻作为环境输入，本构建状态/相机/HUD/初始303项及101130次发布一致；漏掉的资源排队观测仍保留为缺口，无原作分数值输入。
-- 此前构建所选32字控制共1328478回调，严格303项共43检查点11685行，含重复原版环境和派生输入；保留各自历史版本与范围，不自动继承至本次代码。灵梦A相机right叉积原15771次一ULP差异已解决；命中特效worldZ仍19个原始字差异，来自未初始化polar栈Z。三个Extra的15个80项快照保留原范围。
-- 此前ECL自机重合取角匹配原作+π/2，1725次实际getter调用由219差异归零，消除Hard二面分歧；Boss名称HUD改读全局练习选择4f5844，3528组实际接口由117差异归零。六自机Bomb保留模板图层、换关销毁Bomb、HUD flags2退场、D3DX矩阵、加载HUD回收、续关和结算修复保留。
-- 此前SDL8b7ef3f9正式Launcher/WebGL合法短录像自然3980分结束，菜单稳定31.847秒，静音且无警告/错误；该版本Hard已在实际Launcher/WebGL观察到自然结束，HUD1204638210、Graze41516、最大得点175510、残机8，开始后无输入且输出静音；该次完整回放结束后的稳定时长尚未核验。此前c0d31c72咲夜B浏览器六关自然1487617860分结束、菜单稳定861.97秒，按该二进制独立保存，不继承到当前构建。魔理沙B Normal原作27751回调及此前浏览器均自然第二关GameOver，不能称六关通关。 当前SDL候选7bebd2ed仅重编译GameBattle，尚未完成该二进制的浏览器验收；其结果不继承旧版。
-- 生产渲染器未修改，严格颜色20/21，三面1199帧(144,373)蓝色119/120仍失败；新增第4次绘制UV控制U差1~2个float步长，V及关键点雾系数一致；统一视口算式候选未通过，未合入。原47组UV、2560透明遮挡整组哈希及915常量D16值按各自范围保留。原作只在首次Player后清一次attract位，无RNG/序号/计数/健康/输入补偿；时钟、cookie、资源就绪与主机时序为明确环境输入。全模式普通初始化、完整VM/几何、剩余GPU差异、PCM及完整持久化均未完成。
-- 范围报告：[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[复用工具与实际加载完成位](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CAMPAIGN_TOOLING_OCT25.md)、[换关道具与本轮完整对照](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_STAGE_ITEM_RETIREMENT_OCT25.md)、[剩余验收清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)、[HUD完整重跑与启动边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_HUD_COMPLETION_OCT25.md)、[静止伤害圈与Hard全程控制](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_DAMAGE_AREA_SNAP_OCT25.md)、[重合取角](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_PLAYER_AIM_OCT25.md)、[HUD名称与咲夜B](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_HUD_NAME_INPUT_OCT25.md)、[当前GPU](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CURRENT_GPU_BASELINE_OCT25.md)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [eb74dba](https://github.com/AdingApkgg/thp/commit/eb74dbaafeefe385a859485422fe6d2b73ac39b0)。
+- 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
+- 模式清单：30 组中 18 组有原版自然结束记录，15 组观察到全部目标关卡入口；包含提前 GameOver，不代表通关和模式等价。各构建的所选 32 字、相机、HUD、动画和战斗对象结果分别列出，缺少记录不算通过。
+- 灵梦 B Hard：107,662 次回调及所列相机、HUD、2,041 行 303 项动画、1,496 个战斗对象检查点经独立原始数据复算通过，范围限于这一录像与声明环境。
+- 灵梦 B Lunatic：104,110 次回调所选 32 字、HUD、动画与所选战斗对象一致，相机 right 三项各有 21,948 次差异，整段未通过。此前退出码遗漏额外失败门槛已修正；同一完整记录在新版比较器中实际退出 1。
+- 灵梦 A Easy：100,718 次回调所选 32 字及 HUD 一致，仍有相机、14 个特效 Z 字及一个伤害区域 Z 字差。灵梦 B Easy 采集中；前缀暴露同帧控制器／Player 之间的加载完成边界，未记通过。新增精确控制器与 Scene 复制前观察入口尚未实际验收。
+- 本批只更新观察／比较工具、失败范围和生成资源共享，生产玩法、图形和音频未改。当前 SDL 7bebd2ed 的完整浏览器验收、普通原版全流程、其余模式、像素／PCM 与持久化仍待完成；旧版结果不自动继承。测试静音，保留 100GiB 可用空间和单次 2GiB 观察预算。
+- 范围报告：[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[失败门槛与时序边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CAMPAIGN_GAPS_OCT26.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

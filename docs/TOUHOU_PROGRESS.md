@@ -80,14 +80,13 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [5cf40cb](https://github.com/AdingApkgg/thp/commit/5cf40cb4e09d27a63b97259618560ec770c85af6)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [ab158cd](https://github.com/AdingApkgg/thp/commit/ab158cd50d2bd0df185fba10fd54074e1eb47c86)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
-- 模式清单：30 组中 19 组有原版自然结束记录，16 组观察到全部目标关卡入口；包含提前 GameOver，分别记录通关和模式等价，不据旧构建继承通过。
-- 比较宿主分开交付资源、控制器、Player 与绘制阶段的事件，不注入原版 RNG、计数器或相机值。灵梦 B Easy 旧记录的时钟错位消失，但完整 239,234 回调仍有五面加载同一回调中的两个 RNG 字差及相机缓存差，整段未通过；HUD、13 个动画检查点及 1,501 个战斗对象检查点一致。
-- 独立 26,000 回调短采集实际观察了控制器与 Scene 复制前后；两种交付均通过该前缀，未据此称旧失败已复现或修完。灵梦 A Hard 新采集加入实际恢复 RNG 的 456133 边界，首 12,000 回调通过，完整采集继续。旧交付完整 Hard 107,662 回调继续经原始数据独立复算通过。
-- 原指令组件实验：33 个隐藏 effect149 根跳过直接绘制，其 39 个现存子节点的采样顶点不受所列父 Z 差影响；30 个相机输入在原版／真实 D3DX 重新计算后不受旧 right 值影响。完整生命周期、全部绘制调用和像素尚未据此关闭，原始比较失败仍保留。
-- 本批只改观察及测试宿主，生产玩法／渲染／音频未改。普通原版全流程、其余模式、完整图像／PCM／持久化及当前 SDL 7bebd2ed 的浏览器验收继续。测试静音，保留 100GiB 空间和单次 2GiB 观察预算。
-- 范围报告：[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[回调边界和字差用途](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_CALLBACK_BOUNDARY_OCT26.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 已补敌弹命中玩家后的消失特效位移：原版在创建后按当前速率和弹速设置 30 帧、模式 6 插值；旧移植只创建特效。灵梦 B Normal 第 26,000 回调中的 10 个动画字段差异消失。该对象当时隐藏，未据此声称像素差已修复。
+- 同一原版记录的前 60,000 回调经原始字节独立复算：所选状态 32 字、相机 25 字、HUD 2 字、6 个检查点共 2,024 个动画对象及 726 个战斗对象检查点一致；整局采集继续。灵梦 B Hard 完整 107,662 回调、2,041 个动画对象、1,496 个战斗检查点继续独立验证通过。
+- 模式清单：30 组中 20 组有原版自然结束记录，17 组观察到全部目标关卡入口，包含提前 GameOver，与通关和模式等价分别记录。灵梦 A Hard 已自然结束 96,103 回调，所选状态、HUD、战斗检查点一致，仍有相机缓存及 6 个隐藏 effect149 根 Z 字差，整段继续失败。旧灵梦 B Easy 整局的两个 RNG 字差及相机缓存差仍保留。
+- 新 SDL 候选 a0877a36 已生成并核对静音 HTTP 入口，实际浏览器流程未验收；普通原版全流程、其余模式、完整图像／原版 PCM／持久化继续。测试静音，保留 100GiB 空间和单次 2GiB 观察预算，原始资产及内存不随源码发布。
+- 范围报告：[本次修复](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_BULLET_HIT_MOVEMENT_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

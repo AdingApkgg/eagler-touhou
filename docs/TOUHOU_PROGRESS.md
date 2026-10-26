@@ -82,15 +82,19 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-还原、独立 C++／Wasm 移植与 Web 适配继续进行。[当前源码与复核工具](https://github.com/AdingApkgg/thp/commit/7298b1a50c203884f6672f1d0f746280a941b7e6)；[剩余验收清单](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。仅推进 TH14，不新增其他作品占位；尚未标记整作 1:1 完成。
+还原、独立 C++／Wasm 移植与 Web 适配继续进行。[当前源码与复核工具](https://github.com/AdingApkgg/thp/commit/9f750c79daf0262455a25bdb358d9ca177570e23)；[剩余验收清单](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。仅推进 TH14，不新增其他作品占位；尚未标记整作 1:1 完成。
 
-新增[生产 Application 离屏流程](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_NATIVE_APPLICATION_OCT26.md)：实际 C++ 冷启动、咲夜 B Easy 选机、暂停／恢复、保存录像、返回标题和回放结束，以及新进程读回保存文件，共 239 项场景断言通过。原版 x86 codec 读取实际写出的录像；原版分数加载／写回验证全部 149,076 字节记录和完整文件。组件使用声明的平台服务、归一化输入和静音队列；尚未对照原版普通冷启动、物理输入或普通浏览器／IndexedDB 流程。
+新增[咲夜 A Easy](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_SAKUYAA_EASY_OCT26.md)完整 128,425 回调的严格有限复算：状态、相机、HUD、2,441 行动画采样、1,291 个战斗检查点及初始 1,996 项分配顺序一致。自然录像结束、关卡入口和通关分别记录。
 
-[模式清单](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)已有 28 组原版自然结束记录，23 组观察到全部目标关卡入口，分别记录自然结束、入口和通关。[咲夜 B Easy](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_SAKUYAB_EASY_CAMERA_FAILURE_OCT26.md)完整 106,903 回调进入一至六面，相机 right 三字仍有差异，严格门槛失败；实际数据写断点与场景复制前后主线程 PC 观察到绘制内的交错，现有整次绘制前／后调度尚不足。[咲夜 B Lunatic](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_SAKUYAB_LUNATIC_CAMERA_WINDOW_OCT26.md)旧完整失败也保留。[咲夜 B Hard](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_SAKUYAB_HARD_OCT26.md)完整 122,811 回调已通过其所列有限门槛。
+[effect149 公共命中链的栈来源](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_FOCUSED_HIT_STACK_PRODUCER_OCT26.md)在 960 组原指令组件中确认，奖励函数保存的目标坐标指针被下一回调作为 Z 读回；另有 15 个跳过消费者的控制。整局 11 字与已保留敌机位置地址有关联，但仅三个是同一回调证据；较早地址的复用、生产 ABI／地址模型和实际调用点仍待核对。Hard／Lunatic 原始 Z 字差保持失败。
 
-[原样 C++ 渲染器的独立 GLES 组件](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_NATIVE_GLES_COMPONENT_OCT26.md)复现实际浏览器留存的全部 21 幅输出和 38 份着色器源码哈希。生产 WebGL 对原版参考仍为 20／21；独立原生组件的裁剪后 D3D11 视口控制为 21／21，尚不是生产 WebGL 修复或当前浏览器验收。
+新增[生产 Application 离屏流程](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_NATIVE_APPLICATION_OCT26.md)：实际 C++ 冷启动、咲夜 B Easy 选机、暂停／恢复、保存录像、返回标题和回放结束，以及新进程读回保存文件，共 239 项场景断言通过。原版 x86 codec 读取实际写出的录像；原版分数加载／写回验证全部 149,076 字节记录和完整文件。组件使用声明的平台服务、归一化输入和静音队列；尚未对照原版普通冷启动、物理输入或普通浏览器／IndexedDB 流程。
 
-[实际续关音乐队列修复](https://github.com/AdingApkgg/thp/blob/7298b1a50c203884f6672f1d0f746280a941b7e6/docs/porting/TH14_MUSIC_CONTINUE_OCT26.md)通过 216 个原版队列用例和全部 108 个恢复／补帧用例；物理通知竞争、设备队列、完整 Application 续关及浏览器播放仍待验证。测试与预览保持静音。
+[模式清单](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)已有 29 组原版自然结束记录，24 组观察到全部目标关卡入口，分别记录自然结束、入口和通关。[咲夜 B Easy](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_SAKUYAB_EASY_CAMERA_FAILURE_OCT26.md)完整 106,903 回调进入一至六面，相机 right 三字仍有差异，严格门槛失败；实际数据写断点与场景复制前后主线程 PC 观察到绘制内的交错，现有整次绘制前／后调度尚不足。[咲夜 B Lunatic](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_SAKUYAB_LUNATIC_CAMERA_WINDOW_OCT26.md)旧完整失败也保留。[咲夜 B Hard](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_SAKUYAB_HARD_OCT26.md)完整 122,811 回调已通过其所列有限门槛。
+
+[原样 C++ 渲染器的独立 GLES 组件](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_NATIVE_GLES_COMPONENT_OCT26.md)复现实际浏览器留存的全部 21 幅输出和 38 份着色器源码哈希。生产 WebGL 对原版参考仍为 20／21；独立原生组件的裁剪后 D3D11 视口控制为 21／21，尚不是生产 WebGL 修复或当前浏览器验收。
+
+[实际续关音乐队列修复](https://github.com/AdingApkgg/thp/blob/9f750c79daf0262455a25bdb358d9ca177570e23/docs/porting/TH14_MUSIC_CONTINUE_OCT26.md)通过 216 个原版队列用例和全部 108 个恢复／补帧用例；物理通知竞争、设备队列、完整 Application 续关及浏览器播放仍待验证。测试与预览保持静音。
 
 敌弹命中特效位移及曲线激光生成原点已修复。灵梦 A effect149 根 Z 字差、其他历史失败、剩余模式、原版普通菜单至结束流程、完整图形／音频、浏览器持久化及当前发布版普通浏览器验收继续保留。有限范围证据不自动继承到后续构建。
 

@@ -80,7 +80,7 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [99ba1c0](https://github.com/AdingApkgg/thp/commit/99ba1c0e281172c9afedb0013a6a107ac834b647)。
+- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [939b834](https://github.com/AdingApkgg/thp/commit/939b83463a42e3928d0a605fbc8b305bac8d67c8)。
 - 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
 - 已修复曲线激光生成原点和敌弹命中特效位移。魔理沙 A Hard 五面自然结束 75,921 回调，所列门槛通过，仍缺六面覆盖；灵梦 B Hard 完整 107,662 回调的有限门槛通过。
 - 新修正原版 Scene 跨更新的相机交付窗口：只使用实际原指令边界和时间戳，不向引擎注入相机值。灵梦 A Hard 完整 96,103 回调的状态32字、相机25字、HUD2字、1,162个战斗检查点一致；原相机差消除，仍有6个effect149根worldZ字差，严格完整门槛继续失败。同诊断Wasm、同输入56,000回调A/B中，相机字差由933降至0。
@@ -88,10 +88,12 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 - 新增effect149家族完整有限生命周期组件：48组、三种时间步长及两种种子，原版实际工厂／全局动画更新／两个子对象直至家族销毁；除声明根Z外的4,224对原版完整VM字节及2,208对几何保持一致，X位移控制均改变几何。生产C++/Wasm的5,808边界、5,632行303字动画、2,944次几何及退休顺序一致。仅对照归一化分配环境下的对象身份，不声称原始句柄或完整回放通过。
 - 此次调度修改后，咲夜 A Hard 完整96,682回调、动画2,020行／850个战斗检查点，以及灵梦 B Normal 完整122,537回调、动画2,586行／1,294个战斗检查点，通过独立原始字节复算。旧咲夜60,393回调退出记录继续保留为前缀，其退出原因未证明。
 - 新增魔理沙 A Lunatic 原版完整106,797回调，观察到一至六面；所选状态32字、相机25字、HUD2字、七次动画采样共3,102行及登记顺序、803个战斗检查点（306非空）、初始1,000回调窗口1,812项分配顺序全部通过默认严格独立复算。仅证明声明输入及采样字段范围，不代表通关或整个模式等价。
-- 30组清单现为24组原版自然结束记录、20组观察到全部目标关卡入口；提前GameOver、通关与模式等价分别判断。其他相机、RNG和动画差异继续。实际原版存档21,633字节与解码149,076字节已有生产及原指令复核；普通菜单和浏览器持久化仍未验收。
+- 新增魔理沙 B Lunatic 原版自然结束89,235回调，实际到五面，仍缺六面覆盖。所选状态32字、相机25字、HUD2字、六次动画3,010行及登记顺序、601个战斗检查点（238非空）、初始1,823项分配顺序通过严格独立复算，不据此推断通关。
+- 音乐恢复新增17首有效原文件寻址，使用现有无损FLAC跨曲目读取并回到循环点；支持的恢复和同曲重开会清除预解码旧样本。真实Windows只读文件接口下104个用例的389,711,700个浮点样本字一致，原有180个正时间时钟前缀298,224字继续通过。首曲4个负寻址用例明确排除：实际失败会保留先前异步文件位置，仍保留未证明的旧解码回退。初版静音假设已被真实接口否定并撤下，未作为实现发布；物理通知、设备队列、实际续关和浏览器播放仍未验收。测试保持静音。
+- 30组清单现为25组原版自然结束记录、20组观察到全部目标关卡入口；提前GameOver、通关与模式等价分别判断。其他相机、RNG和动画差异继续。实际原版存档21,633字节与解码149,076字节已有生产及原指令复核；普通菜单和浏览器持久化仍未验收。
 - 当前生产图形未修改，实际浏览器仍为20／21场景全缓冲一致，保留三面单像素蓝119／120差。离屏裁剪／半像素偏移实验只用于定位，不作为WebGL已修复或实际浏览器验收。普通流程、所有模式、完整图像、原版PCM及持久化继续。
 - 原始资产和内存不随源码发布；测试保持静音，维持100GiB空间和单次2GiB观察预算。
-- 范围报告：[魔理沙 A Lunatic](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MARISAA_LUNATIC_OCT26.md)、[effect149有限生命周期](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_EFFECT149_RETIREMENT_OCT26.md)、[场景交付与保留差异](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SCENE_HANDOFF_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+- 范围报告：[音乐恢复有效寻址及剩余首曲边界](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MUSIC_SUBFRAME_OCT26.md)、[魔理沙 B Lunatic](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MARISAB_LUNATIC_OCT26.md)、[魔理沙 A Lunatic](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MARISAA_LUNATIC_OCT26.md)、[effect149有限生命周期](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_EFFECT149_RETIREMENT_OCT26.md)、[场景交付与保留差异](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SCENE_HANDOFF_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
 
 ## [th15] 東方紺珠伝 v1.00b
 

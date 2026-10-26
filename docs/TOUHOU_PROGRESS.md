@@ -80,21 +80,17 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ## [th14] 東方輝針城 v1.00b
 
-- 维护与源码：[AdingApkgg/thp](https://github.com/AdingApkgg/thp)，当前源码 [16d008e](https://github.com/AdingApkgg/thp/commit/16d008e663303d09ee3d1b3781c9aff6e82f434f)。
-- 状态：还原／移植／Web 适配均进行中，仅推进 TH14，未完成整作 1:1。
-- 已修复曲线激光生成原点和敌弹命中特效位移。魔理沙 A Hard 五面自然结束 75,921 回调，所列门槛通过，仍缺六面覆盖；灵梦 B Hard 完整 107,662 回调的有限门槛通过。
-- 新修正原版 Scene 跨更新的相机交付窗口：只使用实际原指令边界和时间戳，不向引擎注入相机值。灵梦 A Hard 完整 96,103 回调的状态32字、相机25字、HUD2字、1,162个战斗检查点一致；原相机差消除，仍有6个effect149根worldZ字差，严格完整门槛继续失败。同诊断Wasm、同输入56,000回调A/B中，相机字差由933降至0。
-- 新增灵梦 A Lunatic 原版自然结束86,751回调，观察到一至六面。所选状态、相机、HUD及1,133个战斗检查点一致，保留5个同类动画Z字差，未标为完整通过。336组合成栈原指令实验确认命中回调会读取未写栈Z；实际栈来源与任意外部干预仍未证明，不放宽原始差异门槛。
-- 新增effect149家族完整有限生命周期组件：48组、三种时间步长及两种种子，原版实际工厂／全局动画更新／两个子对象直至家族销毁；除声明根Z外的4,224对原版完整VM字节及2,208对几何保持一致，X位移控制均改变几何。生产C++/Wasm的5,808边界、5,632行303字动画、2,944次几何及退休顺序一致。仅对照归一化分配环境下的对象身份，不声称原始句柄或完整回放通过。
-- 此次调度修改后，咲夜 A Hard 完整96,682回调、动画2,020行／850个战斗检查点，以及灵梦 B Normal 完整122,537回调、动画2,586行／1,294个战斗检查点，通过独立原始字节复算。旧咲夜60,393回调退出记录继续保留为前缀，其退出原因未证明。
-- 新增魔理沙 A Lunatic 原版完整106,797回调，观察到一至六面；所选状态32字、相机25字、HUD2字、七次动画采样共3,102行及登记顺序、803个战斗检查点（306非空）、初始1,000回调窗口1,812项分配顺序全部通过默认严格独立复算。仅证明声明输入及采样字段范围，不代表通关或整个模式等价。
-- 新增魔理沙 B Lunatic 原版自然结束89,235回调，实际到五面，仍缺六面覆盖。所选状态32字、相机25字、HUD2字、六次动画3,010行及登记顺序、601个战斗检查点（238非空）、初始1,823项分配顺序通过严格独立复算，不据此推断通关。
-- 音乐恢复按原版实际续关命令队列重建文件状态：选曲、清除reader循环标志、填充新缓冲，再恢复保存位置，替换首曲旧解码回退。18首／6个纳秒时间／结果音乐此前0或128次通知，共216个完整原版队列用例一致；全部108个恢复与补帧用例共410,218,200个浮点样本字一致，包含此前排除的4个首曲输入。180个正时间时钟前缀298,224字及18首缓存／静音／暂停／分块检查继续通过。真实Windows只读文件调用、受控COM及静音SDL边界；物理通知竞争、设备队列、完整Application续关与浏览器播放仍未验收。
-- 灵梦 B Easy 同录像新采集自然结束238,922回调，观察到一至六面；加入实际工作线程RNG恢复边界后，所选状态32字、相机25字、HUD2字、14次动画共3,325行及登记顺序、1,191个战斗检查点（475非空）、初始480项分配顺序通过严格独立复算。该记录所选自机弹／伤害区域为0行，不新增这两类覆盖；旧239,234回调记录的两字RNG与相机失败继续保留，不改写成通过。
-- 30组清单现为25组原版自然结束记录、20组观察到全部目标关卡入口；提前GameOver、通关与模式等价分别判断。其他相机、RNG和动画差异继续。实际原版存档21,633字节与解码149,076字节已有生产及原指令复核；普通菜单和浏览器持久化仍未验收。
-- 当前生产图形未修改，实际浏览器仍为20／21场景全缓冲一致，保留三面单像素蓝119／120差。离屏裁剪／半像素偏移实验只用于定位，不作为WebGL已修复或实际浏览器验收。普通流程、所有模式、完整图像、原版PCM及持久化继续。
-- 原始资产和内存不随源码发布；测试保持静音，维持100GiB空间和单次2GiB观察预算。
-- 范围报告：[实际续关音乐队列](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MUSIC_CONTINUE_OCT26.md)、[灵梦 B Easy 新记录](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REIMUB_EASY_WORKER_OCT26.md)、[魔理沙 B Lunatic](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MARISAB_LUNATIC_OCT26.md)、[魔理沙 A Lunatic](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MARISAA_LUNATIC_OCT26.md)、[effect149有限生命周期](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_EFFECT149_RETIREMENT_OCT26.md)、[场景交付与保留差异](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_SCENE_HANDOFF_OCT26.md)、[模式清单](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)、[剩余验收](https://github.com/AdingApkgg/thp/blob/main/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。
+### th14 还原、移植与 Web 适配
+
+还原、独立 C++／Wasm 移植与 Web 适配继续进行。[当前源码与复核工具](https://github.com/AdingApkgg/thp/commit/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1)；[剩余验收清单](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。仅推进 TH14，不新增其他作品占位；尚未标记整作 1:1 完成。
+
+[模式清单](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)已有 27 组原版自然结束记录，22 组观察到全部目标关卡入口；自然结束、关卡入口和通关分别判断。[咲夜 B Hard](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_SAKUYAB_HARD_OCT26.md)完整 122,811 回调的状态、相机、HUD、八次动画采样 1,743 行、778 个战斗检查点及初始 2,226 项分配顺序通过严格独立复算。[咲夜 B Lunatic](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_SAKUYAB_LUNATIC_CAMERA_WINDOW_OCT26.md)完整 126,882 回调保留相机 right.x 的 16,631 个回调差异，完整门槛失败；新数据写断点的 20,000 回调诊断前缀通过，但未复现旧复制交错，不改写旧失败。
+
+[原样 C++ 渲染器的独立 GLES 组件](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_NATIVE_GLES_COMPONENT_OCT26.md)复现实际浏览器留存的全部 21 幅输出和 38 份着色器源码哈希；生产 WebGL 对原版参考仍为 20／21，一处蓝色通道差 1。只在独立原生组件中将半像素偏移移至裁剪后的 D3D11 视口，21／21 幅完整缓冲一致。这是差异来源的控制证据，尚不是生产 WebGL 修复或当前浏览器验收。
+
+[实际续关音乐队列修复](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_MUSIC_CONTINUE_OCT26.md)通过 216 个原版队列用例和全部 108 个恢复／补帧用例；物理通知竞争、设备队列、完整 Application 续关及浏览器播放仍待验证。测试与预览保持静音。
+
+敌弹命中特效位移及曲线激光生成原点已修复。灵梦 A Hard／Lunatic 的 effect149 根 Z 字差、其他历史失败、剩余模式、普通菜单至结束流程、完整图形／音频、浏览器持久化及当前发布版普通浏览器验收继续保留。[现有有限范围证据](https://github.com/AdingApkgg/thp/blob/64ecc21229f014dd2c2b02ba39ac7f1dfaec9ed1/docs/porting/TH14_REMAINING_ACCEPTANCE.md)不自动继承到后续构建。
 
 ## [th15] 東方紺珠伝 v1.00b
 

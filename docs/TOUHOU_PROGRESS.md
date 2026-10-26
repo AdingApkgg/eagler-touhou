@@ -82,17 +82,19 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-独立 C++／Wasm 移植与 Web 适配继续进行。[当前源码与复核工具](https://github.com/AdingApkgg/thp/commit/ca306ace291742fa72e3709d31c2bd36b18dc5dd)；[剩余验收清单](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。仅推进 TH14，不新增其他作品占位，尚未标记整作 1:1 完成。
+独立 C++／Wasm 移植与 Web 适配继续进行。[当前源码与复核工具](https://github.com/AdingApkgg/thp/commit/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0)；[剩余验收清单](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。仅推进 TH14，不新增其他作品占位，尚未标记整作 1:1 完成。
 
-[30 组模式清单](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)现均有原版自然结束记录，25 组观察到全部目标关卡入口，分别判断自然结束、入口与通关。新增[魔理沙 B Easy](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_MARISAB_EASY_OCT26.md)完整 107,233 回调和[咲夜 A Easy](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_SAKUYAA_EASY_OCT26.md)完整 128,425 回调通过所列状态、相机、HUD、动画及采样战斗对象的严格有限复算。现有魔理沙 A Easy／Normal／Hard、魔理沙 B Normal／Lunatic 仍缺后续关卡入口，不把自然结束写成全部通关。
+[30 组模式清单](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)现均有原版自然结束记录，25 组观察到全部目标关卡入口，分别判断自然结束、入口与通关。新增[魔理沙 B Easy](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_MARISAB_EASY_OCT26.md)完整 107,233 回调和[咲夜 A Easy](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_SAKUYAA_EASY_OCT26.md)完整 128,425 回调通过所列状态、相机、HUD、动画及采样战斗对象的严格有限复算。现有魔理沙 A Easy／Normal／Hard、魔理沙 B Normal／Lunatic 仍缺后续关卡入口，不把自然结束写成全部通关。
 
-新增[独立 WebGPU 阶段图形组件](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_WEBGPU_STAGE_COMPONENT_OCT26.md)：21 组保留的 Stage 命令流、1,005 次直接绘制、25,804,800 字节均与原版 D3D9 离屏参考一致。采用裁剪后的浮点视口和 RGB565 位复制展开；全部 65,536 个 RGB565 编码的三个采样控制共 786,432 个浮点字一致。组件未请求可选 WebGPU 特性，但使用 WGSL 镜像，未执行或接入生产 C++ Renderer。生产 WebGL 仍为 20／21，真实浏览器、所有目标／深度、同步读取和暂停捕获尚未验收。
+新增[实际 C++ Renderer WebGPU 接入](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_CPP_WEBGPU_OCT26.md)：显式可选分支现执行生产 C++ 状态、批处理、矩阵和纹理解码，并通过 21／21 个 Stage 原版 D3D9 参考缓冲、25,804,800 字节比较；8／8 个原版 D3DX 捕获缓冲、5,242,880 字节也一致，包含 RGB565 暂停截图。实际 Application 成对运行 2,008 帧、239 项断言、18 幅画面、静音 PCM 和保存文件，在声明相同元数据时钟下与默认 GLES 逐字节一致，新进程读回三个文件不变，实际文件另经原版 codec 检查。部分清屏、CPU 版本失效、复制和读回控制也留存完整缓冲供复算。未请求可选 GPU 特性。
 
-[effect149 栈来源](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_FOCUSED_HIT_STACK_PRODUCER_OCT26.md)的 960 组公共命中链原指令组件确认，奖励函数保存的目标坐标指针被下一回调作为 Z 读回，另有 15 个跳过消费者的控制。11 个整局差异字关联到保留过的敌机位置地址，但仅三个是同一回调证据；较早地址复用、生产 ABI／地址模型和调用点仍待核对，原始 Z 字差继续失败。[咲夜 B Easy 相机交错](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_SAKUYAB_EASY_CAMERA_FAILURE_OCT26.md)及其他历史失败也保留。
+此结果超出先前仅镜像 WGSL 的[阶段原型](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_WEBGPU_STAGE_COMPONENT_OCT26.md)，仍不代表发布浏览器路径已完成：浏览器 WebGPU 主机、异步初始化／读回和画布呈现尚未实现，默认 WebGL 保留 20／21 和原有一个蓝通道差异。一般打包格式目标上的光栅混合及部分 stencil 清除明确拒绝；其他格式／管线、加权捕获和整局图像继续验收。Stage 参考保留既有屏幕队列排除，成对 Application 画面不是原版普通菜单画面对照。
 
-[生产 Application 离屏流程](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_NATIVE_APPLICATION_OCT26.md)的冷启动、选机、暂停／恢复、保存录像、返回标题／回放结束和新进程读回共 239 项断言通过；实际写出文件另经原版 codec 检查。声明平台服务、归一化输入和静音队列的组件范围不作为原版普通冷启动或普通浏览器／IndexedDB 验收。
+[effect149 栈来源](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_FOCUSED_HIT_STACK_PRODUCER_OCT26.md)的 960 组公共命中链原指令组件确认，奖励函数保存的目标坐标指针被下一回调作为 Z 读回，另有 15 个跳过消费者的控制。11 个整局差异字关联到保留过的敌机位置地址，但仅三个是同一回调证据；较早地址复用、生产 ABI／地址模型和调用点仍待核对，原始 Z 字差继续失败。[咲夜 B Easy 相机交错](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_SAKUYAB_EASY_CAMERA_FAILURE_OCT26.md)及其他历史失败也保留。
 
-[实际续关音乐队列修复](https://github.com/AdingApkgg/thp/blob/ca306ace291742fa72e3709d31c2bd36b18dc5dd/docs/porting/TH14_MUSIC_CONTINUE_OCT26.md)通过 216 个原版队列用例和全部 108 个恢复／补帧用例；物理通知竞争、设备队列、完整 Application 续关及浏览器播放仍待验证。测试与预览保持静音。
+[生产 Application 离屏流程](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_NATIVE_APPLICATION_OCT26.md)的冷启动、选机、暂停／恢复、保存录像、返回标题／回放结束和新进程读回共 239 项断言通过；实际写出文件另经原版 codec 检查。声明平台服务、归一化输入和静音队列的组件范围不作为原版普通冷启动或普通浏览器／IndexedDB 验收。
+
+[实际续关音乐队列修复](https://github.com/AdingApkgg/thp/blob/faee616ae3be0ee38c66c0d7fd69a2f3da2300e0/docs/porting/TH14_MUSIC_CONTINUE_OCT26.md)通过 216 个原版队列用例和全部 108 个恢复／补帧用例；物理通知竞争、设备队列、完整 Application 续关及浏览器播放仍待验证。测试与预览保持静音。
 
 完整模式／对象／图像／音频、原版普通菜单和当前发布版普通浏览器验收继续；有限范围结果不自动继承到后续构建。
 

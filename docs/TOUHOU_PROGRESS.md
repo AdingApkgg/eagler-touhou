@@ -82,7 +82,9 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/872da5bdfa263a1d76bce01845d14e09b538f6aa)；[剩余验收](https://github.com/AdingApkgg/thp/blob/872da5bdfa263a1d76bce01845d14e09b538f6aa/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/36009ab934e3838c6461403362fd4f3c61bf3213)；[剩余验收](https://github.com/AdingApkgg/thp/blob/36009ab934e3838c6461403362fd4f3c61bf3213/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+
+2026-10-29 补充[六份 SHT 的生产后台解析](https://github.com/AdingApkgg/thp/blob/36009ab934e3838c6461403362fd4f3c61bf3213/docs/porting/TH14_SHT_WORKER_OCT29.md)：独立 CPU worker 调用原生产解析器，以有界且带版本的字段包交给实际 GameResources；60组、283条射击配置及规范包字节一致，四个混合批次、125项损坏／失败／取消／恢复控制通过，18次解析复制、原始SHT读取为零。实际核心所有者八个有效批次中，12次SHT均为解析结果交付，失败和缺失不回退主线程补读。146单元浏览器完整重编；测试端点破坏SHT包头时实际C++在标题前明确拒绝，故障服务已停止。正常页面以普通输入完成咲夜B Hard五至六面、自然结束、返回列表、整页刷新再发现和普通下载，全部110,306字节不变；从五面开始，不继承一面起的整局验收。关闭worker的资源对象重新编译后逐字节不变，此处不冒称新增原生Application运行。原版独立加载／RNG交错、普通冷Replay、全模式及整作1:1继续，30／25统计不变。
 
 2026-10-29 补充[普通 ANM 入口加载轮询和 worker 计时到期检查](https://github.com/AdingApkgg/thp/blob/872da5bdfa263a1d76bce01845d14e09b538f6aa/docs/porting/TH14_NORMAL_ANM_WORKER_OCT29.md)：60 毫秒从实际派发计时，刚就绪的加载可在普通 ANM 更新前生效，保留取消和过期代数检查。十项计时控制通过；明确声明原版主线程暂停／恢复的 33,000 回调对照中，状态／相机／HUD、653 个 VM 各 303 字、288 个战斗检查点及 2,870 次初始发布一致；该用例旧实现也通过，不能单独关闭旧交错问题。另一份 80,324 回调在推定 ANM 交付点下全部所选字段、866 个 VM 与 636 个战斗检查点一致，旧记录的精确指令位置仍未接受。误把第35层绘制当更新入口的反例保留，三项范围检查拒绝混用。两个实际 Application 后端各2,264帧、七断言、完整图像／文件及1,508,352帧静音PCM与此前一致。146单元浏览器重编后以普通输入完成咲夜B Hard五至六面换关，直接留存六面针妙丸战斗，等待日志63毫秒；当前没有继承旧版本从一面开始的整段结束验收。原版独立线程时序、普通Replay初始化、全模式和整作1:1继续，30／25覆盖不变。
 

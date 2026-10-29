@@ -82,7 +82,9 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/2a21402eb504627707b39c091eeee191cf84c21f)；[剩余验收](https://github.com/AdingApkgg/thp/blob/2a21402eb504627707b39c091eeee191cf84c21f/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/872da5bdfa263a1d76bce01845d14e09b538f6aa)；[剩余验收](https://github.com/AdingApkgg/thp/blob/872da5bdfa263a1d76bce01845d14e09b538f6aa/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+
+2026-10-29 补充[普通 ANM 入口加载轮询和 worker 计时到期检查](https://github.com/AdingApkgg/thp/blob/872da5bdfa263a1d76bce01845d14e09b538f6aa/docs/porting/TH14_NORMAL_ANM_WORKER_OCT29.md)：60 毫秒从实际派发计时，刚就绪的加载可在普通 ANM 更新前生效，保留取消和过期代数检查。十项计时控制通过；明确声明原版主线程暂停／恢复的 33,000 回调对照中，状态／相机／HUD、653 个 VM 各 303 字、288 个战斗检查点及 2,870 次初始发布一致；该用例旧实现也通过，不能单独关闭旧交错问题。另一份 80,324 回调在推定 ANM 交付点下全部所选字段、866 个 VM 与 636 个战斗检查点一致，旧记录的精确指令位置仍未接受。误把第35层绘制当更新入口的反例保留，三项范围检查拒绝混用。两个实际 Application 后端各2,264帧、七断言、完整图像／文件及1,508,352帧静音PCM与此前一致。146单元浏览器重编后以普通输入完成咲夜B Hard五至六面换关，直接留存六面针妙丸战斗，等待日志63毫秒；当前没有继承旧版本从一面开始的整段结束验收。原版独立线程时序、普通Replay初始化、全模式和整作1:1继续，30／25覆盖不变。
 
 2026-10-29 完成[冻结后续换关版本babc4e0的一份普通整段回放](https://github.com/AdingApkgg/thp/blob/2a21402eb504627707b39c091eeee191cf84c21f/docs/porting/TH14_LATER_STAGE_FULL_REPLAY_OCT29.md)：咲夜B Hard从一面开始自然结束，直接采样二至六面，一面保留起始选择和启动日志；稳定HUD得分1,511,063,140／残机1等所选字段与此前两份冻结运行相同。返回列表、整页刷新、管理器及游戏Replay再发现、普通下载全部110,306字节均通过，主／worker服务字节不变；本次管理器实际一份录像，不继承旧端口的两份计数，不验收全程帧率或原版整局图像／音频。另[修正暖启动比较夹具漏清ECL演示位](https://github.com/AdingApkgg/thp/blob/2a21402eb504627707b39c091eeee191cf84c21f/docs/porting/TH14_WARM_REPLAY_FLAGS_OCT29.md)，生产玩法未改；负例在回调662漏建五个关卡标题动画，修正后前30,000回调的状态／相机／HUD、431个VM各303字、162个战斗检查点和初始2,870次发布严格相同。延长至48,000仍在回调30,991三面换关的脚本RNG严格失败，原记录保留，没有输入诊断值或固定帧补偿。[覆盖表](https://github.com/AdingApkgg/thp/blob/2a21402eb504627707b39c091eeee191cf84c21f/docs/porting/TH14_MODE_ACCEPTANCE_OCT25.md)仅增补魔理沙A Easy：新原版记录80,324回调、五面自然提前结束，六面入口仍缺失；组合统计仍为30份自然结束／25份全部入口。
 

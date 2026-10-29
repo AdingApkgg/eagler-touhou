@@ -82,7 +82,9 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/798a515c839af2770e08351c82e02771587948d8)；[剩余验收](https://github.com/AdingApkgg/thp/blob/798a515c839af2770e08351c82e02771587948d8/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/59ac9c67b850ed0348fdc6d047b1cd80aa02ae79)；[剩余验收](https://github.com/AdingApkgg/thp/blob/59ac9c67b850ed0348fdc6d047b1cd80aa02ae79/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+
+2026-10-30 补充[当前核心的完整普通 GLES Application 回放](https://github.com/AdingApkgg/thp/blob/59ac9c67b850ed0348fdc6d047b1cd80aa02ae79/docs/porting/TH14_CURRENT_FULL_REGRESSION_OCT30.md)：当前二进制从普通冷标题菜单选择咲夜 B Hard，实际 123,412 帧、25 项动作／44 项断言、六次战斗激活，残机 1 自然结束并稳定 60 帧，110,306 字节录像不变。141 份生产源／对象、Wasm、平台时钟和进程输入均绑定，八幅图像及实际静音 sink 哈希保留；未继承旧构建结果，也不声称原版整帧／PCM 或浏览器通过。内部总分与稳定 HUD 显示分别记录，避免混用。WebGPU 在原定 3,600 秒上限止于 108,875 帧、六面，严格拒绝完整通过。新魔理沙 B Normal 输入在原版暖启动止于三面，33,926 回调、983 行 VM 和 362 个战斗检查点严格一致，未补齐六面；普通原版菜单尝试仍为零个实际回放回调。明确暖启动运行标志 0 与普通 Replay 0x2 的初始化范围，旧失败保留。仅发布工具、文档和哈希元数据，生产核心未改，30／25 覆盖及整作 1:1 未完成状态不变。
 
 2026-10-30 补充[当前核心的灵梦 B Normal 完整回归](https://github.com/AdingApkgg/thp/blob/798a515c839af2770e08351c82e02771587948d8/docs/porting/TH14_CURRENT_FULL_REGRESSION_OCT30.md)：绑定生产核心 3af 与当前观察 Wasm，全部 122,537 回调重新比较，实际一至六面和自然结束；所选状态／相机／HUD、2,586 行 VM 各 303 字、1,294 个战斗检查点及初始 3,274 次发布顺序严格一致。141 份生产源与发布提交、对象及 Wasm 均逐哈希核对；复核器从留存原始数据独立复算，与完整证明相同。此为声明外部时钟／熵／资源交付的原版暖启动用例，原版普通菜单、整帧／PCM、独立线程交错、浏览器和全部模式等价尚未接受。当前咲夜 B Hard 的完整 Application 用例仍在有界运行，不继承旧构建结果。本次仅发布五项工具、文档和哈希元数据，生产核心未改，30／25 清单与整作未完成状态不变。
 

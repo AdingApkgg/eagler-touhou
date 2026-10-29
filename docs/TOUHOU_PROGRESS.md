@@ -82,9 +82,9 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/57a544191704e0ce64cd46de85fe648a3e152097)；[剩余验收](https://github.com/AdingApkgg/thp/blob/57a544191704e0ce64cd46de85fe648a3e152097/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/29e1a8ef759d1fc8c87b18882b0f074eeccb05d2)；[剩余验收](https://github.com/AdingApkgg/thp/blob/29e1a8ef759d1fc8c87b18882b0f074eeccb05d2/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
 
-2026-10-30 纠正[首次 Replay 创建与已有控制器换关恢复](https://github.com/AdingApkgg/thp/blob/57a544191704e0ce64cd46de85fe648a3e152097/docs/porting/TH14_REPLAY_CONSTRUCTION_OCT30.md)：首次原版创建只恢复玩法 RNG，保留动画脚本 RNG；临时位 0x2 仅选择换关恢复，进入玩法前清除。此前误把换关规则用于首关，现修正生产 GameSession 调用与运行标志。原指令首次／换关各288组、实际编译恢复函数的修复前反例及修复后结果全部复核；实际新旧 C++ Application 各782帧／21项断言，首次激活前状态完全一致，修正后脚本 RNG 自然延续。只重编两份核心源并复用经哈希验证的139对象；录像不变、物理音频设备为零。此前3af核心完整流程保留原版本与范围，不继承给本次首次初始化修复。普通原版界面、整帧／PCM、浏览器、全部模式和整作1:1仍未完成，30／25清单不增加。
+2026-10-30 纠正[首次 Replay 创建与已有控制器换关恢复](https://github.com/AdingApkgg/thp/blob/29e1a8ef759d1fc8c87b18882b0f074eeccb05d2/docs/porting/TH14_REPLAY_CONSTRUCTION_OCT30.md)：首次原版创建只恢复玩法 RNG，保留动画脚本 RNG；临时位 0x2 仅选择换关恢复，进入玩法前清除。此前误把换关规则用于首关，现修正生产 GameSession 调用与运行标志。原指令首次／换关各288组、实际编译恢复函数的修复前反例及修复后结果全部复核；实际新旧 C++ Application 各782帧／21项断言，首次激活前状态完全一致，修正后脚本 RNG 自然延续。只重编两份核心源并复用经哈希验证的139对象；录像不变、物理音频设备为零。同一魔理沙B Normal完整普通Application回归实际27251帧后因未到达三面严格失败，二面自然GameOver、20项断言通过，旧失败保留；本次初始化修复不作为整局通过。此前3af核心完整流程保留原版本与范围，不继承给本次首次初始化修复。普通原版界面、整帧／PCM、浏览器、全部模式和整作1:1仍未完成，30／25清单不增加。
 
 2026-10-30 记录[3af版本的完整普通 GLES Application 回放](https://github.com/AdingApkgg/thp/blob/59ac9c67b850ed0348fdc6d047b1cd80aa02ae79/docs/porting/TH14_CURRENT_FULL_REGRESSION_OCT30.md)：3af版本二进制从普通冷标题菜单选择咲夜 B Hard，实际 123,412 帧、25 项动作／44 项断言、六次战斗激活，残机 1 自然结束并稳定 60 帧，110,306 字节录像不变。141 份生产源／对象、Wasm、平台时钟和进程输入均绑定，八幅图像及实际静音 sink 哈希保留；未继承旧构建结果，也不声称原版整帧／PCM 或浏览器通过。内部总分与稳定 HUD 显示分别记录，避免混用。WebGPU 在原定 3,600 秒上限止于 108,875 帧、六面，严格拒绝完整通过。新魔理沙 B Normal 输入在原版暖启动止于三面，33,926 回调、983 行 VM 和 362 个战斗检查点严格一致，未补齐六面；普通原版菜单尝试仍为零个实际回放回调。原先关于普通 Replay 首关使用 0x2 的解释已由上述原指令验证纠正；旧失败保留。仅发布工具、文档和哈希元数据，生产核心未改，30／25 覆盖及整作 1:1 未完成状态不变。
 

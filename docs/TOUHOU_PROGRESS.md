@@ -82,7 +82,9 @@ th02–th05 的独立项目以 DOSBox-X PC-98 核心提供浏览器单机、合�
 
 ### th14 还原、移植与 Web 适配
 
-独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/3af854d7e4251890cb743157b00c862392e6d816)；[剩余验收](https://github.com/AdingApkgg/thp/blob/3af854d7e4251890cb743157b00c862392e6d816/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+独立 C++／Wasm 移植继续。[源码与复核工具](https://github.com/AdingApkgg/thp/commit/798a515c839af2770e08351c82e02771587948d8)；[剩余验收](https://github.com/AdingApkgg/thp/blob/798a515c839af2770e08351c82e02771587948d8/docs/porting/TH14_REMAINING_ACCEPTANCE.md)。只推进 TH14，整作 1:1 未完成。
+
+2026-10-30 补充[当前核心的灵梦 B Normal 完整回归](https://github.com/AdingApkgg/thp/blob/798a515c839af2770e08351c82e02771587948d8/docs/porting/TH14_CURRENT_FULL_REGRESSION_OCT30.md)：绑定生产核心 3af 与当前观察 Wasm，全部 122,537 回调重新比较，实际一至六面和自然结束；所选状态／相机／HUD、2,586 行 VM 各 303 字、1,294 个战斗检查点及初始 3,274 次发布顺序严格一致。141 份生产源与发布提交、对象及 Wasm 均逐哈希核对；复核器从留存原始数据独立复算，与完整证明相同。此为声明外部时钟／熵／资源交付的原版暖启动用例，原版普通菜单、整帧／PCM、独立线程交错、浏览器和全部模式等价尚未接受。当前咲夜 B Hard 的完整 Application 用例仍在有界运行，不继承旧构建结果。本次仅发布五项工具、文档和哈希元数据，生产核心未改，30／25 清单与整作未完成状态不变。
 
 2026-10-30 补充[普通 VM 返回边界的加载轮询](https://github.com/AdingApkgg/thp/blob/3af854d7e4251890cb743157b00c862392e6d816/docs/porting/TH14_VM_RETURN_WORKER_OCT30.md)：正式 C++ 在普通 ANM 每个 VM 返回后按加载器自己的时钟／就绪条件轮询，不包装 VM 回调，不传原版 RNG／句柄或固定拍数。146 个浏览器单元、141 个原生核心单元完整重编；两种原生 Application 各 2,264 帧、七项断言、完整图像／状态／文件／静音 PCM 与此前一致。独立 33,000 回调、629 行 VM、304 个战斗检查点严格回归通过。受控 VM 返回用例确认该交付点可达，但旧／新核心均保留 17,039 行镜头字失败；推定宿主时点即使匹配字段，默认复核器仍拒绝。当前浏览器仅留存到咲夜 B Hard 五至六面及 Boss，未观察自然结束和刷新持久化，不继承旧构建验收。新增原版调用／颜色缓存记录没有复现旧一字失败，旧失败不关闭。此次 24 项只发布源码、工具、文档与哈希，30／25 覆盖和整作未完成状态不变。
 

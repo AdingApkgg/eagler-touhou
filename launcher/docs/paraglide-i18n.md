@@ -7,7 +7,7 @@
 - `messages/zh-CN.json`、`messages/en.json`、`messages/ja.json` 是三语文案的唯一来源。
 - `messages/keys.json` 将原有带点的业务键映射到 Paraglide 标识符，并声明参数名。新增消息应同时补齐三语和这份映射。
 - `project.inlang/settings.json` 从锁文件管理的本地 `@inlang/plugin-message-format` 加载插件，生成期间无需从 CDN 下载插件。
-- `src/paraglide/` 由编译器生成并自动忽略，不能手工维护。`npm run i18n:compile` 可独立生成；Vite 插件也会自动编译。类型检查、正式构建和完整 UI 测试入口均先生成消息。
+- `src/paraglide/` 由编译器生成并自动忽略，不能手工维护。`bun run i18n:compile` 可独立生成；Vite 插件也会自动编译。类型检查、正式构建和完整 UI 测试入口均先生成消息。
 
 所有组件均显式传递 locale，消息函数不依赖跨请求共享的当前语言。项目仅做静态预渲染，没有运行时 SSR；编译器使用 `baseLocale` 策略并禁用不需要的 AsyncLocalStorage。若未来新增运行时 SSR，应重新评估服务端 locale 隔离。
 
@@ -38,11 +38,11 @@ FAQ、首次使用须知、联机玩法与关于页的正文同样使用 Paragli
 在专用远程机器的 `launcher/` 执行：
 
 ```sh
-npm run i18n:check
-npm run typecheck:ui-rewrite
-npm run typecheck:ui-rewrite:tools
-npm run build:ui-rewrite
-npm run test:paraglide:browser -- <候选站地址>
+bun run i18n:check
+bun run typecheck:ui-rewrite
+bun run typecheck:ui-rewrite:tools
+bun run build:ui-rewrite
+bun run test:paraglide:browser -- <候选站地址>
 ```
 
 [前端工具链](frontend-tooling.md)说明 Biome、Vitest 和文案审计入口。

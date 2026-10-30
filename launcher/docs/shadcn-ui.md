@@ -38,7 +38,7 @@ Tailwind 只载入 theme 与 utilities，不载入全局 preflight，保留原�
 
 弹窗、全屏游戏、回放时间轴、触控编辑器和主选择器保留专门的生命周期与指针处理。其内部普通操作按钮复用 Button；原生 `dialog.showModal()`、路由返回、全屏层级和原生 select 的值／change 入口继续由原有业务组件管理。
 
-添加组件时在远程构建机的 `launcher/` 执行 `npx shadcn@latest add <组件名>`，检查 diff 并复用上述 token。保留现有 `components.json` 和主题映射；不要通过重新初始化预设覆盖东方主题。
+添加组件时在远程构建机的 `launcher/` 执行 `bunx --bun shadcn@latest add <组件名>`，检查 diff 并复用上述 token。保留现有 `components.json` 和主题映射；不要通过重新初始化预设覆盖东方主题。
 
 ## 图标与动效
 
@@ -54,7 +54,7 @@ Motion 控制入场期间的透明度和位移，保留浮层居中所需的原�
 
 手机底栏及正文补偿 `safe-area-inset-bottom`，通知和提示浮层避开底栏。帮助及设置面板只显示当前分组，支持方向键进入、Escape 关闭并返回打开按钮；面板未展开时使用 `inert`。菜单可见性立即更新，高度及 Motion 入场负责动画，避免 `visibility` 过渡阻止初始焦点。游戏及房间工作区状态隐藏导航并取消导航占位。
 
-远程构建候选后可执行 `npm run test:responsive-navigation:browser -- <候选站地址>`。浏览器回归覆盖 1024/1023px 边界、平板、320px 手机、横屏、路由切换、说明页、键盘焦点及减弱动效；游戏和房间仅做 CSS 状态探针，不会启动游戏或加入房间。
+远程构建候选后可执行 `bun run test:responsive-navigation:browser -- <候选站地址>`。浏览器回归覆盖 1024/1023px 边界、平板、320px 手机、横屏、路由切换、说明页、键盘焦点及减弱动效；游戏和房间仅做 CSS 状态探针，不会启动游戏或加入房间。
 
 ## 顶栏、折叠与三语
 

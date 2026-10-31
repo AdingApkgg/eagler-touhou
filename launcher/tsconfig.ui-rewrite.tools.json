@@ -6,6 +6,7 @@
     "scripts/ui-rewrite/**/*.ts",
     "vitest.config.ts",
     "vitest.workspace.config.ts",
+    "vitest.ports.config.ts",
     "tests/vitest/**/*.ts"
   ],
   "compilerOptions": {

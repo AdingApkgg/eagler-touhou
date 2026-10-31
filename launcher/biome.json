@@ -19,6 +19,7 @@
       "scripts/build-service-translations.mjs",
       "vitest.config.ts",
       "vitest.workspace.config.ts",
+      "vitest.ports.config.ts",
       "biome.json",
       "package.json",
       "tsconfig.ui-rewrite.tools.json",
